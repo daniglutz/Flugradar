@@ -49,6 +49,7 @@
 			</div>
 		</div>
 		<div class="col-md-9">
+			<h4>Details:</h4>
 			<?php include 'googlemaps.php' ?>
 			<?php /*include 'flickr.php'*/ ?>
 		</div>
