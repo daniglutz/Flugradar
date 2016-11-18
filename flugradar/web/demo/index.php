@@ -31,7 +31,6 @@
 			</nav>
 			
 			<div class="panel-body">
-			
 				<?php
 					if($_GET['site'] != "")
 					{

@@ -6,15 +6,11 @@
 	<script>
 		function myMap() {
 			// Start
-			var latStart = 37.774930;
-			var lngStart = -122.419416;
+			var latStart = 47.458391; // ZH
+			var lngStart = 8.555111; // ZH
 			
 			// Destinationen
-			var locations = [];
-			locations.push([40.774930, 205.419416]);
-			locations.push([35.689487, 139.691706]);
-			locations.push([48.856614, 2.352222]);
-			locations.push([-33.867487, 151.206990]);
+			var locations = <?php echo json_encode($locations) ?>;
 			
 			var map = new google.maps.Map(document.getElementById('map'), {
 				mapTypeId: google.maps.MapTypeId.TERRAIN
