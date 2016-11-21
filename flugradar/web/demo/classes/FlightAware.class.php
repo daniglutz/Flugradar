@@ -20,7 +20,7 @@ class FlightAware {
      * @throws Exception 'FlightAware: Configuration File Missing!' When the script can't find the
      * flightaware.config.ini or no config array is set
      */
-    public function __construct($ini = "flightaware.config.ini")
+    public function __construct($ini = "/configs/flightaware.config.ini")
     {
         if(is_array($ini)){
             $this->config = $ini;

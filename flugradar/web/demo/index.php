@@ -19,6 +19,11 @@
 		<![endif]-->
 	</head>
 	<body>
+		<?php
+			/** *** globale Funktionen importieren *** */
+			//require_once 'global_functions.php';
+		?>
+	
 		<h1 class='text-center'>FlugRadar</h1>
 		
 		<div class="panel panel-default">

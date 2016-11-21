@@ -2,8 +2,8 @@
  
 	$api_key = '29c98f2427784d7e3e77dae6653ba825';
 	
-	$tag = 'Zürich,City,landscape';
-	$perPage = 5;
+	//$tag = 'Zürich,City,landscape';
+	//$perPage = 5;
 	$url = 'https://api.flickr.com/services/rest/?method=flickr.photos.search';
 	$url.= '&api_key='.$api_key;
 	$url.= '&tags='.urlencode($tag)."&tag_mode=all";
@@ -27,7 +27,7 @@
 		
 		$photo_url = 'http://farm'.$farm_id.'.staticflickr.com/'.$server_id.'/'.$photo_id.'_'.$secret_id.'_'.$size.'.'.'jpg';
 		
-		print "<img title='".$title."' src='".$photo_url."' />";
+		echo "<img title='".$title."' src='".$photo_url."' style='padding-right:10px; float:left;' />";
 	}
  
 ?>

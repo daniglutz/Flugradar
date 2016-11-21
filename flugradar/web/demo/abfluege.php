@@ -10,6 +10,7 @@
 						<option>Basel</option>
 						<option>Genf</option>
 					</select>
+					<button type="submit" class="btn btn-default">Daten aktualisieren</button>
 				</div>
 			</form>
 			<h4>Flüge:</h4>
@@ -37,45 +38,52 @@
 							<p class='list-group-item-text'>
 								Startzeit: ".date("H:i", $arr_info["actualdeparturetime"])." Uhr<br />
 								Ankunftszeit: ".date("H:i", $arr_info["estimatedarrivaltime"])." Uhr<br />
-								Flugzeugtyp: ".$arr_info["aircrafttype"]."<br />
+								<!--Flugzeugtyp: ".$arr_info["aircrafttype"]."<br />
 								Geschwindigkeit: ".$flightinfo["InFlightInfoResult"]["groundspeed"]."<br />
-								Flughöhe: ".$flightinfo["InFlightInfoResult"]["altitude"]."
+								Flughöhe: ".$flightinfo["InFlightInfoResult"]["altitude"]."-->
 							</p>
 						</a>";
 						
 						// add locations
-						array_push($locations, array($flightinfo["InFlightInfoResult"]["latitude"], $flightinfo["InFlightInfoResult"]["longitude"]));
+						array_push($locations, array(1, $flightinfo["InFlightInfoResult"]["latitude"], $flightinfo["InFlightInfoResult"]["longitude"]));
 					}
 				?>
 				
 			</div>
 		</div>
 		<div class="col-md-9">
-			<h4>Details:</h4>
 			
 			<?php
 				if($_GET['id'] > 0)
 				{
 					// MYSQL-ABFRAGE
 					$locations = array(
-						array(40.774930, 205.419416)
+						array(1, 40.774930, 205.419416)
 					);
 					
+					
+					echo "<h2>".$arr_info["destinationCity"]."</h2>";
+
+					$tag = $arr_info["aircrafttype"].',Plane';
+					$perPage = 1;
+					include 'flickr.php';
+					
 					echo "
-					<div class='row'>
-						<div class='col-sm-4'>
-							<h5>Flugzeugtyp: ".$arr_info["aircrafttype"]."</h5>
-						</div>
-						<div class='col-sm-4'>
-							<h5>Geschwindigkeit: ".$flightinfo["InFlightInfoResult"]["groundspeed"]."</h5>
-						</div>
-						<div class='col-sm-4'>
-							<h5>Flughöhe: ".$flightinfo["InFlightInfoResult"]["altitude"]."</h5>
-						</div>
-					</div>";
+					<h5>Startzeit: ".date("H:i", $arr_info["actualdeparturetime"])." Uhr</h5>
+					<h5>Ankunftszeit: ".date("H:i", $arr_info["estimatedarrivaltime"])." Uhr</h5>
+					<h5>Flugzeugtyp: ".$arr_info["aircrafttype"]."</h5>
+					<h5>Geschwindigkeit: ".$flightinfo["InFlightInfoResult"]["groundspeed"]." km/h</h5>
+					<h5>Flughöhe: ".$flightinfo["InFlightInfoResult"]["altitude"]." m</h5>
+					<h5>Position: ".$flightinfo["InFlightInfoResult"]["latitude"].", ".$flightinfo["InFlightInfoResult"]["longitude"]."</h5>
+					<br />";
 				}
 				
+				echo "<h4>Karte:</h4>";
 				include 'googlemaps.php';
+				
+				$tag = $arr_info["destinationCity"].',City,landscape';
+				$perPage = 5;
+				echo "<br /><h4>Eindrücke:</h4>";
 				include 'flickr.php';
 			?>
 			
