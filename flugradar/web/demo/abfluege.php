@@ -17,35 +17,57 @@
 			<div class="list-group">
 				
 				<?php
-					/*require('classes/FlightAware.class.php');
+					// *** Abfrage definieren ***
+					$sql = "
+					SELECT
+						`id`,
+						`flight_ident`,
+						`origin`,
+						`destination`,
+						DATE_FORMAT(`arrivaltime`, '%H:%i') AS `arrivaltime`,
+						DATE_FORMAT(`departuretime`, '%H:%i') AS `departuretime`,
+						`aircrafttype`,
+						`speed`,
+						`altitude`,
+						`latitude`,
+						`longitude`
+					FROM `last_departures`
+					WHERE `origin` = 'LSZH'
+					ORDER BY `id` DESC
+					LIMIT 10";
 					
+					// *** Abfrage ausführen ***
+					$result = $db->query($sql);
 					
-					$faClient = new FlightAware();*/
-					//$departed = $faClient->Departed(array('airport' => 'LSZH', 'filter' => 'airline', 'howMany' => '10', 'offset' => '0'));
-					$departed = json_decode(file_get_contents('testdaten/testdaten_Departed.txt'), TRUE);
-					
-					$locations = array();
-					
-					// Daten formatiert ausgeben
-					foreach($departed["DepartedResult"]["departures"] as $arr_info)
+					// *** ergebnis? ***
+					if($result->num_rows)
 					{
-						//$flightinfo = $faClient->InFlightInfo(array('ident' => $arr_info["ident"));
-						$flightinfo = json_decode(file_get_contents('testdaten/testdaten_InFlightInfo_'.$arr_info["ident"].'.txt'), TRUE);
+						$locations = array();
+						$cities = "";
 						
-						echo "
-						<a href='?site=abfluege&id=5' class='list-group-item'>
-							<h4 class='list-group-item-heading'>".$arr_info["destinationCity"]."</h4>
-							<p class='list-group-item-text'>
-								Startzeit: ".date("H:i", $arr_info["actualdeparturetime"])." Uhr<br />
-								Ankunftszeit: ".date("H:i", $arr_info["estimatedarrivaltime"])." Uhr<br />
-								<!--Flugzeugtyp: ".$arr_info["aircrafttype"]."<br />
-								Geschwindigkeit: ".$flightinfo["InFlightInfoResult"]["groundspeed"]."<br />
-								Flughöhe: ".$flightinfo["InFlightInfoResult"]["altitude"]."-->
-							</p>
-						</a>";
-						
-						// add locations
-						array_push($locations, array(1, $flightinfo["InFlightInfoResult"]["latitude"], $flightinfo["InFlightInfoResult"]["longitude"]));
+						// ** ergebnis-datensätze durchlaufen **
+						while($row = $result->fetch_assoc())
+						{
+							// * ausgeben *
+							echo "
+							<a href='?site=abfluege&id=".$row['id']."' class='list-group-item'>
+								<h4 class='list-group-item-heading'>".$row["destination"]."</h4>
+								<p class='list-group-item-text'>
+									Startzeit: ".$row["arrivaltime"]." Uhr<br />
+									Ankunftszeit: ".$row["departuretime"]." Uhr<br />
+								</p>
+							</a>";
+							
+							// add locations
+							array_push(
+								$locations,
+								array(intval($row['id']), floatval($row['latitude']), floatval($row['longitude']))
+							);
+							
+							// add city
+							//$cities .= $row['destination'].",";
+							$cities .= "Amsterdam,";
+						}
 					}
 				?>
 				
@@ -56,32 +78,69 @@
 			<?php
 				if($_GET['id'] > 0)
 				{
-					// MYSQL-ABFRAGE
-					$locations = array(
-						array(1, 40.774930, 205.419416)
-					);
+					// *** Abfrage definieren ***
+					$sql = "
+					SELECT
+						`id`,
+						`flight_ident`,
+						`origin`,
+						`destination`,
+						DATE_FORMAT(`arrivaltime`, '%H:%i') AS `arrivaltime`,
+						DATE_FORMAT(`departuretime`, '%H:%i') AS `departuretime`,
+						`aircrafttype`,
+						`speed`,
+						`altitude`,
+						`latitude`,
+						`longitude`
+					FROM `last_departures`
+					WHERE `id` = ".$_GET['id']."
+					LIMIT 1";
 					
+					// *** Abfrage ausführen ***
+					$result = $db->query($sql);
 					
-					echo "<h2>".$arr_info["destinationCity"]."</h2>";
+					// *** ergebnis? ***
+					if($result->num_rows)
+					{
+						// Ergebnis speichern
+						$row = $result->fetch_assoc();
+						
+						// Variablen definieren
+						$locations = array();
+						$cities = "";
+						
+						
+						echo "<h2>".$row['destination']."</h2>";
 
-					$tag = $arr_info["aircrafttype"].',Plane';
-					$perPage = 1;
-					include 'flickr.php';
-					
-					echo "
-					<h5>Startzeit: ".date("H:i", $arr_info["actualdeparturetime"])." Uhr</h5>
-					<h5>Ankunftszeit: ".date("H:i", $arr_info["estimatedarrivaltime"])." Uhr</h5>
-					<h5>Flugzeugtyp: ".$arr_info["aircrafttype"]."</h5>
-					<h5>Geschwindigkeit: ".$flightinfo["InFlightInfoResult"]["groundspeed"]." km/h</h5>
-					<h5>Flughöhe: ".$flightinfo["InFlightInfoResult"]["altitude"]." m</h5>
-					<h5>Position: ".$flightinfo["InFlightInfoResult"]["latitude"].", ".$flightinfo["InFlightInfoResult"]["longitude"]."</h5>
-					<br />";
+						$tag = $row['aircrafttype'].',Plane';
+						$perPage = 1;
+						include 'flickr.php';
+						
+						echo "
+						<h5>Startzeit: ".$row['arrivaltime']." Uhr</h5>
+						<h5>Ankunftszeit: ".$row['departuretime']." Uhr</h5>
+						<h5>Flugzeugtyp: ".$row['aircrafttype']."</h5>
+						<h5>Geschwindigkeit: ".$row['speed']." km/h</h5>
+						<h5>Flughöhe: ".$row['altitude']." m</h5>
+						<h5>Position: ".$row['latitude'].", ".$row['longitude']."</h5>
+						<br />";
+						
+						// add locations
+						array_push(
+							$locations,
+							array(intval($row['id']), floatval($row['latitude']), floatval($row['longitude']))
+						);
+						
+						// add city
+						//$cities = $row['destination'].",";
+						$cities = "Amsterdam,";
+					}
 				}
 				
 				echo "<h4>Karte:</h4>";
 				include 'googlemaps.php';
 				
-				$tag = $arr_info["destinationCity"].',City,landscape';
+				$tag = $cities.',City,landscape';
 				$perPage = 5;
 				echo "<br /><h4>Eindrücke:</h4>";
 				include 'flickr.php';
