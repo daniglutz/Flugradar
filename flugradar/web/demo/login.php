@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+    //Sessionmanagement
+    session_start();
+    
+    session_destroy();
+    $_SESSION = array();
+    
+?>
 <html lang="en">
     <form action="actionlogin.php" method="post">
 
