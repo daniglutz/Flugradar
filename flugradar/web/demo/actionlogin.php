@@ -3,15 +3,19 @@
 //Session aufnehmen
 session_start();
 
+//Ursprung
 fromLogin();
 
+//Benutzerdatenbank abfragen
 userValidate();    
     
 //Weiterleitung    
 include 'index.php';
 
 
-//Funktionen
+
+
+//-------Funktionen-------
 
 function fromLogin() {
     //Kommt von Login Seite
@@ -47,8 +51,19 @@ function userValidate(){
     //Von Datenbank lesen
     $result = $db->query($sql);
     
-    //Prüfen Username
-    if($_SESSION['user'] == $result)
+    //Prüfen Benutzer und Passwort
+    while($row = $result->fetch_assoc()){
+        if($_SESSION['user'] == $row['user']){
+            if($_SESSION['pwd'] == $row['pwd']){                       
+                break;
+            }
+            else{
+                exit("<p>Passwort ist falsch.<br /><a href='login.php'>Zum Login</a></p>");
+            }
+        }
+        else{
+            exit("<p>Benutzer ist falsch.<br /><a href='login.php'>Zum Login</a></p>");
+        }
+    }
             
 }
-
