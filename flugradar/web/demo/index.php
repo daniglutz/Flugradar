@@ -22,33 +22,41 @@
 		<?php
 			/** ** Datenbank-Klasse einbinden ** */
 			include_once './classes/Database.class.php';
+			/** ** Flickr-Klasse einbinden ** */
+			require_once('./classes/Flickr.class.php'); 
+			/** ** Functions einbinden ** */
+			include_once './functions.php';
 			
 			// *** Datenbankvebindung aufbauen ***
 			$db = new Database();
 		?>
 		
-		<h1 class='text-center'>FlugRadar</h1>
+		<?php
+			if(isset($_GET['site']) AND $_GET['site'] != 'abfluege')
+				echo "<h1 class='text-center'>FlugRadar</h1>";
 		
-		<div class="panel panel-default">
-		
-			<nav class="navbar navbar-default">
-				<ul class="nav navbar-nav">
-					<li><a href="?site=abfluege">Letzte Abflüge</a></li>
-					<li><a href="?site=login">Einstellungen</a></li>
-				</ul>
-			</nav>
+			echo "
+			<div class='panel panel-default'>
 			
-			<div class="panel-body">
-				<?php
-					if($_GET['site'] != "")
+				<nav class='navbar navbar-default'>
+					<ul class='nav navbar-nav'>
+						<li><a href='?site=abfluege&airport=".$_GET['airport']."'>Letzte Abflüge</a></li>
+						<li><a href='?site=login&airport=".$_GET['airport']."'>Einstellungen</a></li>
+					</ul>
+				</nav>
+				
+				<div class='panel-body'>";
+					
+					if(isset($_GET['site']) AND $_GET['site'] != "")
 					{
 						include $_GET['site'].'.php';
 					}
-				?>
+				
+				echo "
+				</div>
 			
-			</div>
-		
-		</div>
+			</div>";
+		?>
 		
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

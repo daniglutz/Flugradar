@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 	
-	<div id="map" style="width:100%; height:500px; opacity:0.8;"></div>
+	<div id="map" style="width:100%; min-height:500px; opacity:0.8;"></div>
 
 	<script>
 		function myMap() {
-			// Start
-			var latStart = 47.458391; // ZH
-			var lngStart = 8.555111; // ZH
+			// origin positions
+			var latStart = <?php echo $latOrigin ?>;
+			var lngStart = <?php echo $lngOrigin ?>;
 			
-			// Destinationen
+			// locations
 			var locations = <?php echo json_encode($locations) ?>;
 			
+			// flightinfos
+			var flightinfos = <?php echo json_encode($flightinfos) ?>;
+			
+			// markers and infowindows
+			var markers = [];
+			var infowindows = [];
+			
+			// generate map
 			var map = new google.maps.Map(document.getElementById('map'), {
 				mapTypeId: google.maps.MapTypeId.TERRAIN
 			});
@@ -24,16 +32,17 @@
 				fillColor: '#000',
 				fillOpacity: 1.5,
 				scale: 1.5,
-				anchor: new google.maps.Point(11, 11),
-				strokeWeight: 0
-			};
+				anchor: new google.maps.Point(11, 20),
+				strokeWeight: 0,			};
 			
 			for(var i = 0; i < locations.length; i++) {
+				// add path
 				var flightPlanCoordinates = [
 					{lat: latStart, lng: lngStart},
 					{lat: locations[i][1], lng: locations[i][2]}
 				];
 				
+				// add line
 				var flightPath = new google.maps.Polyline({
 					path: flightPlanCoordinates,
 					icons: [{icon: planeSymbol, offset: '100%'}],
@@ -43,10 +52,28 @@
 					strokeWeight: 5
 				});
 				
+				// add link on line
 				var id = locations[i][0];
-				flightPath.addListener('click', function() {
-					window.location.href = '?site=abfluege&id=' + id;
+				flightPath.addListener('click', function(id) {
+					return function() {
+						window.location.href = '?site=abfluege&airport=<?php echo $_GET['airport'] ?>&id=' + id;
+					}
+				}(id));
+				
+				// add infowindow
+				infowindows[i] = new google.maps.InfoWindow({
+					content: flightinfos[i][1]
 				});
+				markers[i] = new google.maps.Marker({
+					position: {lat: locations[i][1], lng: locations[i][2]},
+					map: map/*,
+					icon: planeSymbol*/
+				});
+				markers[i].addListener('click', function(i) {
+					return function() {
+						infowindows[i].open(map, markers[i]);
+					}
+				}(i));
 				
 				bounds.extend(new google.maps.LatLng(locations[i][1], locations[i][2]));
 				flightPath.setMap(map);
