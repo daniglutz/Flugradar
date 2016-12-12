@@ -52,18 +52,21 @@ function userValidate(){
     $result = $db->query($sql);
     
     //Prüfen Benutzer und Passwort
-    while($row = $result->fetch_assoc()){
-        if($_SESSION['user'] == $row['user']){
-            if($_SESSION['pwd'] == $row['pwd']){                       
-                break;
-            }
-            else{
-                exit("<p>Passwort ist falsch.<br /><a href='login.php'>Zum Login</a></p>");
-            }
+    $bUser = false;
+    $bPwd = false;
+    
+    foreach ($result as $value) {
+        if ($value == $_SESSION['user']) {
+            $bUser = true;            
         }
-        else{
-            exit("<p>Benutzer ist falsch.<br /><a href='login.php'>Zum Login</a></p>");
+        if ($bUser == false) {
+            exit("<p>Benutzer nicht vorhanden<br /><a href='login.php'>Zum Login</a></p>");           
         }
-    }
-            
+        if ($value == $_SESSION['pwd']) {
+            $bPwd = true;            
+        }
+        if ($bPwd == false) {
+            exit("<p>Passwort ist falsch<br /><a href='login.php'>Zum Login</a></p>");
+        }        
+    }           
 }
