@@ -41,7 +41,8 @@
 				<nav class='navbar navbar-default'>
 					<ul class='nav navbar-nav'>
 						<li><a href='?site=abfluege&airport=".$_GET['airport']."'>Letzte Abflüge</a></li>
-						<li><a href='?site=login&airport=".$_GET['airport']."'>Einstellungen</a></li>
+						<li><a href='?site=login&airport=".$_GET['airport']."'>Login</a></li>
+						<li><a href='?site=settings&airport=".$_GET['airport']."'>Einstellungen</a></li>
 					</ul>
 				</nav>
 				
