@@ -64,11 +64,11 @@
 			$url .= '&per_page='.$perPage;
 			$url .= '&format=json';
 			$url .= '&nojsoncallback=1';
-
+			
 			// get the results
 			$data = json_decode(file_get_contents($url), true);
 			$photos = array();
-
+			
 			// check if the status didn't fail
 			if($data['stat'] != 'fail'){
 				//return only the data for the photos
@@ -97,7 +97,7 @@
 			
 			// initialize
 			$images = "";
-
+			
 			// check if photos
 			if(!empty($photos)) {
 				foreach($photos as $photo){
