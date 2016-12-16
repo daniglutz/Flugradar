@@ -58,7 +58,8 @@
 					`last_departures`.`flight_ident`,
 					`last_departures`.`origin`,
 					`last_departures`.`destination`,
-					`airports`.`city` AS `destination_city`,
+					`airports`.`city` AS `airport_city`,
+					`airports`.`description` AS `airport_description`,
 					DATE_FORMAT(`last_departures`.`arrivaltime`, '%H:%i') AS `arrivaltime`,
 					DATE_FORMAT(`last_departures`.`departuretime`, '%H:%i') AS `departuretime`,
 					`last_departures`.`aircrafttype`,
@@ -92,7 +93,7 @@
 							// * ausgeben *
 							echo "
 							<a href='?site=abfluege&airport=".$_GET['airport']."&id=".$row['id']."' class='list-group-item'>
-								<h4 class='list-group-item-heading'>".$row["destination_city"]."</h4>
+								<h4 class='list-group-item-heading'>".$row["airport_city"]."</h4>
 								<p class='list-group-item-text'>
 									Startzeit: ".$row["departuretime"]." Uhr<br />
 									Ankunftszeit: ".$row["arrivaltime"]." Uhr<br />
@@ -152,9 +153,9 @@
 						
 						// get impressions
 						echo "
-						<h2>".$row_sel['destination_city']."</h2>
-						<h4>Eindrücke</h4>";
-						$images = $flickr->searchPhotos($row_sel['destination_city'].',city,attractions', 5);
+						<h2>".$row_sel['airport_city']."</h2>
+						<h4>".$row_sel['airport_description']."</h4>";
+						$images = $flickr->searchPhotos($row_sel['airport_city'].',city,attractions', 5);
 						echo $flickr->getPhotos($images, 'q');
 						echo "<div class='clearfix'></div><br />";
 						
@@ -183,7 +184,6 @@
 						);
 					}
 					
-					echo "<h4>Karte:</h4>";
 					include 'googlemaps.php';
 				}
 				else
