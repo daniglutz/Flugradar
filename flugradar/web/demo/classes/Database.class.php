@@ -1,31 +1,24 @@
 <?php
 	
 	/**
-	* Datenbank-Klasse
+	* database class
 	* 
-	* - {@link __construct}: query ausführen und auf Fehler überprüfen
-	* - {@link query}: query ausführen und auf Fehler überprüfen
-	* - {@link getError}: gibt die Fehlerinformationen ausführlich zurück
+	* - {@link __construct}: constructor
+	* - {@link query}: run query and error handling
+	* - {@link getError}: get error message
 	* 
-	* @package Flugradar
 	* @name    /classes/Database.class.php
 	* @author  Dario Kuster
-	* @version 28.11.2016
+	* @version 19.12.2016
 	*/
 	class Database extends mysqli
 	{
 		/**
-		* Verbindung
+		* connect
 		* @access protected
-		* @var    object
+		* @var    array
 		*/
 		protected static $connect;
-		/**
-		* SQL-Abfrage
-		* @access private
-		* @var    string
-		*/
-		private $_sql = '';
 		
 		/**
 		* constructor
@@ -35,14 +28,15 @@
 		* @version 28.11.2016
 		* 
 		* @return  void
-		* @throws  Exception when the script can't find the config-file
+		* @throws  exception when the script can't find the config-file
 		*/
-		public function __construct()
-		{
+		public function __construct() {
+            
 			if(!isset(self::$connect)) {
 				// link config-file
 				$config_file = "./configs/config.ini";
 				
+                // if conig-file exists
 				if(file_exists($config_file)) {
 					$config = parse_ini_file($config_file, true);
 					$dbdata = $config['mysql'];
@@ -63,46 +57,49 @@
 				}
 			}
 			
+            // return
 			return self::$connect;
 		}
 		
 		/**
-		* query ausführen und auf Fehler überprüfen
+		* run query and error handling
 		* 
 		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
-		* @param   string $sql abfrage, die ausgeführt werden soll
+		* @param   string $sql query to run
 		* @return  void
 		*/
-		public function query($sql)
-		{
-			// Leerzeichen des Query abschneiden und diesen in der Klasse speichern
-			$this->_sql = trim($sql);
+		public function query($sql) {
+            
+			// remove spaces
+			$sql = trim($sql);
 			
-			// ausführen
-			$result = self::$connect->query($this->_sql);
+			// run query
+			$result = self::$connect->query($sql);
 			
-			// wenn fehler aufgetreten
+			// error handling
 			$this->getError();
 			
+            // return
 			return $result;
 		}
 		
 		/**
-		* gibt die Fehlerinformationen ausführlich zurück
+		* get error message
 		* 
 		* @access  private
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
-		* @return  string Ausführliche Fehlermeldung
+		* @return  string detail error message
 		*/
-		private function getError()
-		{
-			if(self::$connect->error)
-			{
+		private function getError() {
+            
+            // if error
+			if(self::$connect->error) {
+                // construct error text
 				$error_str = "
 				<div class='alert alert-danger' role='alert'>
 					<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
@@ -111,11 +108,11 @@
 					".self::$connect->error."
 				</div>";
 			}
-			else
-			{
+			else {
 				$error_str = "";
 			}
 			
+            // return
 			return $error_str;
 		}
 	}

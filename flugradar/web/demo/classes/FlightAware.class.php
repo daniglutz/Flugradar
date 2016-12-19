@@ -37,7 +37,7 @@
 			$config_file = "./configs/config.ini";
 			
 			if(file_exists($config_file)) {
-				$config = parse_ini_file($ini, true);
+				$config = parse_ini_file($config_file, true);
 				$this->config = $config['flightaware'];
 			}
 			else {
@@ -56,8 +56,8 @@
 		* @param array  $parameters Key/Value pair of the parameters
 		* @return string JSON results
 		*/
-		public function request($function, array $parameters)
-		{
+		public function request($function, array $parameters) {
+            
 			$options = array(
 				'http' =>
 					array(
@@ -73,9 +73,9 @@
 
 			$results = file_get_contents($url, FALSE, $context);
 
-			if(in_array('HTTP/1.1 200 OK', $http_response_header)){
+			if(in_array('HTTP/1.1 200 OK', $http_response_header)) {
 				return json_decode($results, TRUE);
-			}else{
+			} else {
 				return array('error'=>$http_response_header);
 			}
 		}

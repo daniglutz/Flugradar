@@ -1,58 +1,64 @@
 <?php
 	
 	/**
-	* Class for interacting with Flicker's API
+	* flickr class
 	* 
-	* - {@link __construct}: XXXX
-	* - {@link searchPhotos}: XXXX
+	* - {@link __construct}: constructor
+	* - {@link searchPhotos}: search photos
+	* - {@link getPhotos}: get photos
 	* 
-	* @package Flugradar
 	* @name    /classes/Flickr.class.php
 	* @author  Dario Kuster
-	* @version 28.11.2016
+	* @version 19.12.2016
 	*/
 	class Flickr {
 		
 		/**
-		* Config
+		* config
 		* @access private
 		* @var    array
 		*/
 		private $config;
 		
 		/**
-		* Constructor
+		* constructor
 		* 
 		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
 		* @return  void
-		* @throws  Exception when the script can't find the config-file
+		* @throws  exception when the script can't find the config-file
 		*/
 		public function __construct() {
+            
 			// link config-file
 			$config_file = "./configs/config.ini";
-			
-			if(file_exists($config_file)) {
-				$config = parse_ini_file($config_file, true);
-				$this->config = $config['flickr'];
-			}
-			else {
-				throw new Exception('Flickr: Configuration File Missing!');
-			}
+            
+            // if conig-file exists
+            if(file_exists($config_file)) {
+                $config = parse_ini_file($config_file, true);
+                $this->config = $config['flickr'];
+
+                if(!isset($this->config)) {
+                    throw new Exception("Flickr: Zugriffsdaten in Config-File fehlen!");
+                }
+            }
+            else {
+                throw new Exception("Flickr: Config-File fehlt!");
+            }
 		}
 		
 		/**
-		* Search Photos
+		* search photos
 		*
 		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		*
-		* @param   string  $tags    Tags for search
-		* @param   integer $perPage Number of results
-		* @return  array Array of photos
+		* @param   string  $tags    tags for search
+		* @param   integer $perPage number of results
+		* @return  array array of photos
 		*/
 		public function searchPhotos($tags = '', $perPage = 5) {
 			
@@ -83,7 +89,7 @@
 		}
 		
 		/**
-		* Get Photos
+		* get photos
 		* 
 		* @access  public
 		* @author  Dario Kuster
@@ -91,7 +97,7 @@
 		* 
 		* @param   array $photos Array of photos
 		* @param   char  $size   Size of photos
-		* @return  string Images tags
+		* @return  string images tags
 		*/
 		public function getPhotos($photos, $size = 'q') {
 			
