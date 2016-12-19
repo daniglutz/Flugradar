@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <?php
     //Sessionmanagement
-    session_start();
+    //session_start();
     
-    session_destroy();
-    $_SESSION = array();
+    //session_destroy();
+    //$_SESSION = array();
     
 ?>
 <html lang="en">
@@ -28,13 +28,13 @@
 
         <div class="form-group">
             <label for="user"><h2>Benutzer:
-                    <input type="text" name="Benutzer" class="form-control" id="user" required="">
+                    <input type="text" name="user" class="form-control" id="user" required="">
                 </h2></label>
         </div>
 
         <div class="form-group">
             <label for="pwd"><h2>Passwort:
-                    <input type="password" class="form-control" id="pwd" required="">
+                    <input type="password" name="pwd" class="form-control" id="pwd" required="">
                 </h2></label>
         </div>
 
