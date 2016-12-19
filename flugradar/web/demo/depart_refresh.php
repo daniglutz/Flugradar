@@ -1,36 +1,25 @@
 <?php
 	
 	/**
-	* beschreibung
+	* refresh departures
 	* 
-	* @package Templates
 	* @name    depart_refresh.php
 	* @author  Dario Kuster
 	* @version 28.11.2016
 	*/
 	
-	
-	/** ** MySQL-Klasse einbinden ** */
-	include_once './classes/Database.class.php';
-	/** ** FlightAware-Klasse einbinden ** */
-	include_once './classes/FlightAware.class.php';
-	/** ** Functions einbinden ** */
-	include_once './functions.php';
-	
-	
-	// *** Datenbankvebindung aufbauen ***
-	$db = new Database();
-	
-	
-	// FlightAware Objekt erzeugen
+    
+	/*
+	// FlightAware object
 	$fa = new FlightAware();
+    // save last departures in array
 	$departed = $fa->Departed(array('airport' => $_GET['airport'], 'filter' => 'airline', 'howMany' => $_GET['howMany'], 'offset' => '0'));
 	
-	// speichern
+	// loop departures
 	foreach($departed["DepartedResult"]["departures"] as $departinfo)
 	{
+        // save flight informations in array
 		$flightinfo = $fa->InFlightInfo(array('ident' => $departinfo["ident"]));
-		
 		
 		// INSERT SQL
 		$sql = "
@@ -57,8 +46,12 @@
 			".mysql_number($flightinfo["InFlightInfoResult"]["latitude"]).",
 			".mysql_number($flightinfo["InFlightInfoResult"]["longitude"]).")";
 		
-		// eintragen durchfühern (Fehlerabfang erledigt die Klasse)
+		// run query
 		$db->query($sql);
 	}
+    */
+    
+    // redirect
+    header("Location: ?site=abfluege&airport=".$_GET['airport']);
 	
 ?>
