@@ -49,33 +49,35 @@ function userValidate(){
     //SQL abfrage definieren
     $sql = "SELECT 
                    `id`,
-                   `user`,
+                   `username`,
                    `password`,
-                   `admin`,
+                   `admin`
             FROM `users`            
             ORDER BY `id`";
         
     //Von Datenbank lesen
     $result = $db->query($sql);
-    
-    var_dump($result);
-    
-    //Prüfen Benutzer und Passwort
+        
+    //Pruefvariablen
     $bUser = false;
     $bPwd = false;
     
-//    foreach ($result as $value) {
-//        if ($value == $_SESSION['user']) {
-//            $bUser = true;            
-//        }
-//        if ($bUser == false) {
-//            exit("<p>Benutzer nicht vorhanden<br /><a href='login.php'>Zum Login</a></p>");           
-//        }
-//        if ($value == $_SESSION['pwd']) {
-//            $bPwd = true;            
-//        }
-//        if ($bPwd == false) {
-//            exit("<p>Passwort ist falsch<br /><a href='login.php'>Zum Login</a></p>");
-//        }        
-//    }           
+    //Daten prüfen
+    while($row = $result->fetch_assoc()){
+        if ($row['username'] == $_SESSION['user']) {
+            $bUser = true;            
+        }       
+        if ($row['password'] == $_SESSION['pwd']) {
+            $bPwd = true;            
+        }        
+    }
+    
+    //Zugang prüfen
+    if ($bUser == false) {
+            exit("<p>Benutzer nicht vorhanden<br /><a href='login.php'>Zum Login</a></p>");           
+    }
+    if ($bPwd == false) {
+        exit("<p>Passwort ist falsch<br /><a href='login.php'>Zum Login</a></p>");
+    }
+    
 }
