@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 	
-	<div id="map" style="width:100%; min-height:500px; opacity:0.8;"></div>
+	<div id="map"></div>
 
 	<script>
 		function myMap() {
+            
 			// origin positions
 			var latStart = <?php echo $latOrigin ?>;
 			var lngStart = <?php echo $lngOrigin ?>;
@@ -28,11 +29,12 @@
 			bounds.extend(new google.maps.LatLng(latStart, lngStart));
 			
 			// add routes
-			for(var i = 0; i < locations.length; i++) {
+            for(var i in locations) {
+                
 				// add path
 				var flightPlanCoordinates = [
 					{lat: latStart, lng: lngStart},
-					{lat: locations[i][1], lng: locations[i][2]}
+					{lat: locations[i][0], lng: locations[i][1]}
 				];
 				
 				// add line
@@ -45,16 +47,15 @@
 				});
 				
 				// add link on line
-				var id = locations[i][0];
-				flightPath.addListener('click', function(id) {
+				flightPath.addListener('click', function(i) {
 					return function() {
-						window.location.href = '?site=abfluege&airport=<?php echo $_GET['airport'] ?>&id=' + id;
+						window.location.href = '?site=departures&airport=<?php echo $_GET['airport'] ?>&id=' + i;
 					};
-				}(id));
+				}(i));
 				
 				// add infowindow
 				infowindows[i] = new google.maps.InfoWindow({
-					content: flightinfos[i][1]
+					content: flightinfos[i]
 				});
 				
 				// add planeSymbol
@@ -65,12 +66,12 @@
 					scale: 1.5,
 					anchor: new google.maps.Point(11, 20),
 					strokeWeight: 0,
-					rotation: degreeBearing(latStart, lngStart, locations[i][1], locations[i][2])
+					rotation: degreeBearing(latStart, lngStart, locations[i][0], locations[i][1])
 				};
 				
 				// add marker
 				markers[i] = new google.maps.Marker({
-					position: {lat: locations[i][1], lng: locations[i][2]},
+					position: {lat: locations[i][0], lng: locations[i][1]},
 					map: map,
 					icon: planeSymbol
 				});
@@ -80,23 +81,23 @@
 					};
 				}(i));
 				
-				bounds.extend(new google.maps.LatLng(locations[i][1], locations[i][2]));
+				bounds.extend(new google.maps.LatLng(locations[i][0], locations[i][1]));
 				
 				// set to map
 				flightPath.setMap(map);
 			}
-			
+            
 			// open infowindow, if detail view
-			if(infowindows.length === 1)
-			{
-				infowindows[0].open(map, markers[0]);
+			if(infowindows.length === (parseInt(i) + 1)) {
+                
+				infowindows[i].open(map, markers[i]);
 			}
 			
 			map.fitBounds(bounds);
 		}
 		
-		function degreeBearing(lat1, lng1, lat2, lng2)
-		{   
+		function degreeBearing(lat1, lng1, lat2, lng2) {
+        
 			var dLon = getRad(lng2 - lng1);
 			var dPhi = Math.log(Math.tan(getRad(lat2)/2 + Math.PI/4) / Math.tan(getRad(lat1)/2 + Math.PI/4));
 			if(Math.abs(dLon) > Math.PI)
@@ -108,18 +109,18 @@
 			return getBearing(Math.atan2(dLon, dPhi));
 		}
 
-		function getRad(deg)
-		{
+		function getRad(deg) {
+            
 			return deg * (Math.PI / 180);
 		}
 
-		function getDegrees(rad)
-		{
+		function getDegrees(rad) {
+            
 			return rad * 180 / Math.PI;
 		}
 
-		function getBearing(rad) 
-		{  
+		function getBearing(rad) {
+            
 			// convert radians to degrees (as bearing: 0...360)
 			return (getDegrees(rad) + 360) % 360;
 		}

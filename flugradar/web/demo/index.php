@@ -20,43 +20,48 @@
 	</head>
 	<body>
 		<?php
-			/** ** Datenbank-Klasse einbinden ** */
+			/** ** database class ** */
 			include_once './classes/Database.class.php';
-			/** ** Flickr-Klasse einbinden ** */
+            /** ** flightaware class ** */
+            include_once './classes/FlightAware.class.php';
+			/** ** flickr class ** */
 			require_once('./classes/Flickr.class.php'); 
-			/** ** Functions einbinden ** */
+			/** ** functions ** */
 			include_once './functions.php';
 			
-			// *** Datenbankvebindung aufbauen ***
+			// *** create database object ***
 			$db = new Database();
 		?>
 		
 		<?php
-			if(isset($_GET['site']) AND $_GET['site'] != 'abfluege')
-				echo "<h1 class='text-center'>FlugRadar</h1>";
-		
+            
+            // output menu
 			echo "
-			<div class='panel panel-default'>
+            <nav class='navbar navbar-default navbar-fixed-top'>
+                <ul class='nav navbar-nav'>
+                    <li>
+                        <a href='?site=departures&airport=".$_GET['airport']."'>
+                            <span class='glyphicon glyphicon-map-marker' aria-hidden='true'></span> Letzte Abflüge
+                        </a>
+                    </li>
+                    <li>
+                        <a href='?site=login&airport=".$_GET['airport']."'>
+                            <span class='glyphicon glyphicon-log-in' aria-hidden='true'></span> Login
+                        </a>
+                    </li>
+                    <li>
+                        <a href='?site=settings&airport=".$_GET['airport']."'>
+                            <span class='glyphicon glyphicon-cog' aria-hidden='true'></span> Einstellungen
+                        </a>
+                    </li>
+                </ul>
+            </nav>";
 			
-				<nav class='navbar navbar-default'>
-					<ul class='nav navbar-nav'>
-						<li><a href='?site=abfluege&airport=".$_GET['airport']."'>Letzte Abflüge</a></li>
-						<li><a href='?site=login&airport=".$_GET['airport']."'>Login</a></li>
-						<li><a href='?site=settings&airport=".$_GET['airport']."'>Einstellungen</a></li>
-					</ul>
-				</nav>
-				
-				<div class='panel-body'>";
-					
-					if(isset($_GET['site']) AND $_GET['site'] != "")
-					{
-						include $_GET['site'].'.php';
-					}
-				
-				echo "
-				</div>
-			
-			</div>";
+            // include subsite
+            if(isset($_GET['site']) AND $_GET['site'] != "")
+            {
+                include $_GET['site'].'.php';
+            }
 		?>
 		
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
