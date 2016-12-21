@@ -96,7 +96,7 @@
                             while($row = $result->fetch_assoc())
                             {
                                 // set active class
-                                $active = ($row['id'] == $_GET['id']) ? ' active' : '';
+                                $active = (isset($_GET['id']) AND $_GET['id'] == $row['id']) ? ' active' : '';
 
                                 // search images of aircrafttype
                                 $aircrafttype_images = $flickr->searchPhotos($row['aircrafttype'].',Plane', 1);
