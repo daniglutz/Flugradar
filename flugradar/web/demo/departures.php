@@ -28,21 +28,21 @@
                     ORDER BY `description`";
 
                     // *** run query ***
-                    $result = $db->query($sql);
+                    $result_a = $db->query($sql);
 
                     // *** results? ***
-                    if($result->num_rows)
+                    if($result_a->num_rows)
                     {
                         echo "<select class='form-control' id='flughafen' required onchange=\"location.href = '?site=departures&airport=' + this.value;\">";
 
                             // ** loop results **
-                            while($row = $result->fetch_assoc())
+                            while($row = $result_a->fetch_assoc())
                             {
+                                // selected aitport
                                 if($_GET['airport'] == $row['icao_code'])
                                 {
                                     echo "<option value='".$row['icao_code']."' selected>".$row['description']."</option>";
-                                    $latOrigin = $row['latitude'];
-                                    $lngOrigin = $row['longitude'];
+                                    $locationOrigin = array(floatval($row['latitude']), floatval($row['longitude']));
                                 }
                                 else
                                 {
@@ -80,10 +80,10 @@
                     LIMIT 10";
 
                     // *** run query ***
-                    $result = $db->query($sql);
+                    $result_d = $db->query($sql);
 
                     // *** results? ***
-                    if($result->num_rows)
+                    if($result_d->num_rows)
                     {
                         // define object / arrays
                         $flickr = new Flickr();
@@ -93,7 +93,7 @@
                         echo "<div class='list-group'>";
 
                             // ** loop results **
-                            while($row = $result->fetch_assoc())
+                            while($row = $result_d->fetch_assoc())
                             {
                                 // set active class
                                 $active = (isset($_GET['id']) AND $_GET['id'] == $row['id']) ? ' active' : '';
@@ -154,7 +154,7 @@
 		</div>
 		<div class='col-md-9'>";
 
-            if($result->num_rows)
+            if($result_d->num_rows)
             {
                 if(isset($_GET['id']) AND $_GET['id'] > 0)
                 {

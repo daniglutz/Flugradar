@@ -33,11 +33,11 @@
 		public function __construct() {
             
 			// link config-file
-			$config_file = "./configs/config.ini";
+			$configFile = "./configs/config.ini";
             
             // if conig-file exists
-            if(file_exists($config_file)) {
-                $config = parse_ini_file($config_file, true);
+            if(file_exists($configFile)) {
+                $config = parse_ini_file($configFile, true);
                 $this->config = $config['flickr'];
 
                 if(!isset($this->config)) {
@@ -77,7 +77,7 @@
 			
 			// check if the status didn't fail
 			if($data['stat'] != 'fail'){
-				//return only the data for the photos
+				// return only the data for the photos
 				$photos = $data['photos']['photo'];
 				
 				// return photo array

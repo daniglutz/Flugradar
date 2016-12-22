@@ -6,9 +6,8 @@
 	<script>
 		function myMap() {
             
-			// origin positions
-			var latStart = <?php echo $latOrigin ?>;
-			var lngStart = <?php echo $lngOrigin ?>;
+			// location origin
+			var locationOrigin = <?php echo json_encode($locationOrigin) ?>;
 			
 			// locations
 			var locations = <?php echo json_encode($locations) ?>;
@@ -26,14 +25,14 @@
 			});
 			
 			var bounds = new google.maps.LatLngBounds();
-			bounds.extend(new google.maps.LatLng(latStart, lngStart));
+			bounds.extend(new google.maps.LatLng(locationOrigin[0], locationOrigin[1]));
 			
 			// add routes
             for(var i in locations) {
                 
 				// add path
 				var flightPlanCoordinates = [
-					{lat: latStart, lng: lngStart},
+					{lat: locationOrigin[0], lng: locationOrigin[1]},
 					{lat: locations[i][0], lng: locations[i][1]}
 				];
 				
@@ -66,7 +65,7 @@
 					scale: 1.5,
 					anchor: new google.maps.Point(11, 20),
 					strokeWeight: 0,
-					rotation: degreeBearing(latStart, lngStart, locations[i][0], locations[i][1])
+					rotation: degreeBearing(locationOrigin[0], locationOrigin[1], locations[i][0], locations[i][1])
 				};
 				
 				// add marker
@@ -88,13 +87,25 @@
 			}
             
 			// open infowindow, if detail view
-			if(infowindows.length === (parseInt(i) + 1)) {
+			if(arrayCount(infowindows) === 1) {
                 
 				infowindows[i].open(map, markers[i]);
 			}
 			
 			map.fitBounds(bounds);
 		}
+        
+        function arrayCount(array) {
+        
+            var c = 0;
+            
+            for(var key in array) {
+                if(array[key] !== undefined)
+                    c++;
+            }
+
+            return c;
+        }
 		
 		function degreeBearing(lat1, lng1, lat2, lng2) {
         

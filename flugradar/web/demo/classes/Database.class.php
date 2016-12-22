@@ -34,11 +34,11 @@
             
 			if(!isset(self::$connect)) {
 				// link config-file
-				$config_file = "./configs/config.ini";
+				$configFile = "./configs/config.ini";
 				
                 // if conig-file exists
-				if(file_exists($config_file)) {
-					$config = parse_ini_file($config_file, true);
+				if(file_exists($configFile)) {
+					$config = parse_ini_file($configFile, true);
 					$dbdata = $config['mysql'];
 					
 					if(isset($dbdata)) {
@@ -73,11 +73,8 @@
 		*/
 		public function query($sql) {
             
-			// remove spaces
-			$sql = trim($sql);
-			
-			// run query
-			$result = self::$connect->query($sql);
+			// remove spaces and run query
+			$result = self::$connect->query(trim($sql));
 			
 			// error handling
 			$this->getError();

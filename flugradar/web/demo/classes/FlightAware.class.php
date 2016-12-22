@@ -34,10 +34,10 @@
 		public function __construct() {
 			
 			// link config-file
-			$config_file = "./configs/config.ini";
+			$configFile = "./configs/config.ini";
 			
-			if(file_exists($config_file)) {
-				$config = parse_ini_file($config_file, true);
+			if(file_exists($configFile)) {
+				$config = parse_ini_file($configFile, true);
 				$this->config = $config['flightaware'];
 			}
 			else {
