@@ -62,19 +62,33 @@ function userValidate(){
     $bUser = false;
     $bPwd = false;
     
+    //Passwort hash
+//    var_dump($_SESSION['pwd']);
+//    $hPwd = password_hash($_SESSION['pwd'], PASSWORD_BCRYPT);
+//    var_dump($hPwd);
+    
     //Daten prüfen
     while($row = $result->fetch_assoc()){
+        //Benutzername
         if ($row['username'] == $_SESSION['user']) {
             $bUser = true;            
-        }       
-        if ($row['password'] == $_SESSION['pwd']) {
+        }
+        //Passwort
+        $dPwd = password_verify($_SESSION['pwd'], $row['password']);
+        if ($dPwd) {
             $bPwd = true;            
         }        
     }
     
     //Zugang prüfen
     if ($bUser == false) {
-            exit("<p>Benutzer nicht vorhanden<br /><a href='login.php'>Zum Login</a></p>");           
+        //exit("<p>Benutzer nicht vorhanden<br /><a href='login.php'>Zum Login</a></p>");
+        exit('<SCRIPT type="text/javascript">
+        alert("Benutzer nicht vorhanden");
+        </script>
+        <body onLoad="document.location.href="index.php">
+        <!-- <a href="index.php">Zum Login</a> -->
+        ');
     }
     if ($bPwd == false) {
         exit("<p>Passwort ist falsch<br /><a href='login.php'>Zum Login</a></p>");
