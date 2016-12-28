@@ -1,33 +1,42 @@
 <?php
-//Importe
+/**
+ * File actionlogin
+ * The actionlogin can vallidate the login data and give access to the application.
+ * 
+ * @name actionlogin.php
+ * @author Andreas Trachsel
+ * @version 28.12.2016
+ *  
+ */
+
+
+//imports
 include_once 'classes/Database.class.php';
+include_once 'index.php';
 
 
-
-//Session aufnehmen
+//take session
 session_start();
 
-//Ursprung
+//origin
 fromLogin();
 
-//Benutzerdatenbank abfragen
+//check user data
 userValidate();    
     
-//Weiterleitung    
+//login ok    
 include 'index.php';
 
 
-
-
-//-------Funktionen-------
+//-------functions-------
 
 function fromLogin() {
-    //Kommt von Login Seite
+    //from login page
     if (isset($_POST['user'])) {
         $_SESSION['user'] = $_POST['user'];
         $_SESSION['pwd'] = $_POST['pwd'];
     }
-    //Kommt von ausserhalb
+    //not from login page
     if (!isset($_SESSION['user'])) {
         exit("<p>Kein Zugang<br /><a href='login.php'>Zum Login</a></p>");
     }
@@ -35,7 +44,7 @@ function fromLogin() {
 
 
 function inSession(){
-    //Kommt von ausserhalb
+    //is not in the session
     if (!isset($_SESSION['user'])) {
         exit("<p>Kein Zugang<br /><a href='login.php'>Zum Login</a></p>");
     }    
@@ -43,10 +52,10 @@ function inSession(){
 
 
 function userValidate(){
-    //SQL Objekt erzeugen
+    //create SQL object
     $db = new Database();
     
-    //SQL abfrage definieren
+    //define SQL query
     $sql = "SELECT 
                    `id`,
                    `username`,
@@ -55,43 +64,41 @@ function userValidate(){
             FROM `users`            
             ORDER BY `id`";
         
-    //Von Datenbank lesen
+    //execute query
     $result = $db->query($sql);
         
-    //Pruefvariablen
+    //variables for access validate
     $bUser = false;
     $bPwd = false;
     
-    //Passwort hash
-//    var_dump($_SESSION['pwd']);
-//    $hPwd = password_hash($_SESSION['pwd'], PASSWORD_BCRYPT);
-//    var_dump($hPwd);
-    
-    //Daten prüfen
+    //check data
     while($row = $result->fetch_assoc()){
-        //Benutzername
+        //username
         if ($row['username'] == $_SESSION['user']) {
             $bUser = true;            
         }
-        //Passwort
+        //password
         $dPwd = password_verify($_SESSION['pwd'], $row['password']);
         if ($dPwd) {
             $bPwd = true;            
         }        
     }
     
-    //Zugang prüfen
+    //validate access
     if ($bUser == false) {
-        //exit("<p>Benutzer nicht vorhanden<br /><a href='login.php'>Zum Login</a></p>");
-        exit('<SCRIPT type="text/javascript">
-        alert("Benutzer nicht vorhanden");
-        </script>
-        <body onLoad="document.location.href="index.php">
-        <!-- <a href="index.php">Zum Login</a> -->
-        ');
+        exit("      <div class='alert alert-danger' role='alert'>
+                    <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+                    <span class='sr-only'>Hinweis:</span>
+                    <b>Benutzer nicht vorhanden</b><br />
+                    Bitte geben Sie einen gültigen Benutzernamen ein.
+                </div>");
     }
     if ($bPwd == false) {
-        exit("<p>Passwort ist falsch<br /><a href='login.php'>Zum Login</a></p>");
-    }
-    
+        exit("      <div class='alert alert-danger' role='alert'>
+                    <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
+                    <span class='sr-only'>Hinweis:</span>
+                    <b>Passwort ungültig</b><br />
+                    Bitte geben Sie ein gültiges Passwort ein.
+                </div>");
+    }    
 }
