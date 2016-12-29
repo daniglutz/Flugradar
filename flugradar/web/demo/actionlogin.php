@@ -50,32 +50,41 @@ function userValidate() {
         `password`,
         `admin`
     FROM `users`            
-    ORDER BY `id`";
+    WHERE `username` = '".$_POST['user']."'";
     
     // *** run query ***
     $result = $db->query($sql);
 
     // *** results? ***
     if($result->num_rows) {
-        //check data
-        while($row = $result->fetch_assoc()) {
-            // username
-            if($row['username'] == $_POST['user']) {
-                $bUser = true;
-            }
-            // password
-            if(password_verify($_POST['pwd'], $row['password'])) {
-                $bPwd = true;
-            }        
+        // ** save result **
+        $row = $result->fetch_assoc();
+        
+        // check username
+        if($row['username'] == $_POST['user']) {
+            $bUser = true;
+        }
+        // check password
+        if(password_verify($_POST['pwd'], $row['password'])) {
+            $bPwd = true;
         }
         
         if($bUser AND $bPwd) {
-            $_SESSION['user'] = $_POST['user'];
+            setSession($row);
         }
         else {
             error($bUser, $bPwd);
         }
     }
+    else {
+        error($bUser, $bPwd);
+    }
+}
+
+function setSession($row) {
+    $_SESSION['id'] = $row['id'];
+    $_SESSION['user'] = $row['username'];
+    $_SESSION['admin'] = $row['admin'];
 }
 
 // validate access
@@ -90,8 +99,7 @@ function error($bUser, $bPwd) {
             Bitte geben Sie einen gültigen Benutzernamen ein.
         </div>";
     }
-    
-    if($bPwd == false) {
+    elseif($bPwd == false) {
         $_SESSION['error'] = "
         <div class='alert alert-danger' role='alert'>
                 <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
