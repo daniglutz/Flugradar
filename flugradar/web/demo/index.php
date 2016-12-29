@@ -28,7 +28,10 @@
 			require_once('./classes/Flickr.class.php'); 
 			/** ** functions ** */
 			include_once './functions.php';
-			
+            
+            // *** start/continue session ***
+			session_start();
+            
 			// *** create database object ***
 			$db = new Database();
 		?>
@@ -38,29 +41,38 @@
             // output menu
 			echo "
             <nav class='navbar navbar-default navbar-fixed-top'>
-                <ul class='nav navbar-nav'>
-                    <li>
-                        <a href='?site=departures&airport=".$_GET['airport']."'>
-                            <span class='glyphicon glyphicon-map-marker' aria-hidden='true'></span> Letzte Abflüge
-                        </a>
-                    </li>
-                    <li>
-                        <a href='?site=login&airport=".$_GET['airport']."'>
-                            <span class='glyphicon glyphicon-log-in' aria-hidden='true'></span> Login
-                        </a>
-                    </li>
-                    <li>
-                        <a href='?site=settings&airport=".$_GET['airport']."'>
-                            <span class='glyphicon glyphicon-cog' aria-hidden='true'></span> Einstellungen
-                        </a>
-                    </li>
+                <ul class='nav navbar-nav'>";
+                    
+                    if(isset($_SESSION['user'])) {
+                        echo "
+                        <li>
+                            <a href='?site=departures&airport=".$_GET['airport']."'>
+                                <span class='glyphicon glyphicon-map-marker' aria-hidden='true'></span> Letzte Abflüge
+                            </a>
+                        </li>
+                        <li>
+                            <a href='?site=settings&airport=".$_GET['airport']."'>
+                                <span class='glyphicon glyphicon-cog' aria-hidden='true'></span> Einstellungen
+                            </a>
+                        </li>";
+                    } else {
+                        echo "
+                        <li>
+                            <a href='?site=login'>
+                                <span class='glyphicon glyphicon-log-in' aria-hidden='true'></span> Login
+                            </a>
+                        </li>";
+                    }
+                    
+                    echo "
                 </ul>
             </nav>";
 			
             // include subsite
-            if(isset($_GET['site']) AND $_GET['site'] != "")
-            {
+            if(isset($_GET['site']) AND isset($_SESSION['user'])) {
                 include $_GET['site'].'.php';
+            } else {
+                include 'login.php';
             }
 		?>
 		

@@ -52,6 +52,6 @@
     */
     
     // redirect
-    header("Location: ?site=abfluege&airport=".$_GET['airport']);
+    header("Location: ?site=departures&airport=".$_GET['airport']);
 	
 ?>
