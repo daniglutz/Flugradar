@@ -9,7 +9,7 @@
 			// location origin
 			var locationOrigin = <?php echo json_encode($locationOrigin) ?>;
 			
-			// locations
+			// locations destination
 			var locations = <?php echo json_encode($locations) ?>;
 			
 			// flightinfos

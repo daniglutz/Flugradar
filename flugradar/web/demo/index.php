@@ -38,7 +38,7 @@
 		
 		<?php
             
-            // output menu
+            // ** output menu **
 			echo "
             <nav class='navbar navbar-default navbar-fixed-top'>
                 <ul class='nav navbar-nav'>";
@@ -68,7 +68,7 @@
                 </ul>
             </nav>";
 			
-            // include subsite
+            // ** include subsite **
             if(isset($_GET['site']) AND isset($_SESSION['user'])) {
                 include $_GET['site'].'.php';
             } else {

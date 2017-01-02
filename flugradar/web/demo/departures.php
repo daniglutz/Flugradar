@@ -28,24 +28,19 @@
                     ORDER BY `description`";
 
                     // *** run query ***
-                    $result_a = $db->query($sql);
+                    $resultA = $db->query($sql);
 
                     // *** results? ***
-                    if($result_a->num_rows)
-                    {
+                    if($resultA->num_rows) {
                         echo "<select class='form-control' id='flughafen' required onchange=\"location.href = '?site=departures&airport=' + this.value;\">";
 
                             // ** loop results **
-                            while($row = $result_a->fetch_assoc())
-                            {
-                                // selected aitport
-                                if($_GET['airport'] == $row['icao_code'])
-                                {
+                            while($row = $resultA->fetch_assoc()) {
+                                // * output dropdown for airports *
+                                if($_GET['airport'] == $row['icao_code']) {
                                     echo "<option value='".$row['icao_code']."' selected>".$row['description']."</option>";
                                     $locationOrigin = array(floatval($row['latitude']), floatval($row['longitude']));
-                                }
-                                else
-                                {
+                                } else {
                                     echo "<option value='".$row['icao_code']."'>".$row['description']."</option>";
                                 }
                             }
@@ -80,11 +75,10 @@
                     LIMIT 10";
 
                     // *** run query ***
-                    $result_d = $db->query($sql);
+                    $resultD = $db->query($sql);
 
                     // *** results? ***
-                    if($result_d->num_rows)
-                    {
+                    if($resultD->num_rows) {
                         // define object / arrays
                         $flickr = new Flickr();
                         $locations = array();
@@ -93,15 +87,14 @@
                         echo "<div class='list-group'>";
 
                             // ** loop results **
-                            while($row = $result_d->fetch_assoc())
-                            {
+                            while($row = $resultD->fetch_assoc()) {
                                 // set active class
                                 $active = (isset($_GET['id']) AND $_GET['id'] == $row['id']) ? ' active' : '';
 
                                 // search images of aircrafttype
-                                $aircrafttype_images = $flickr->searchPhotos($row['aircrafttype'].',Plane', 1);
+                                $aircrafttypeImages = $flickr->searchPhotos($row['aircrafttype'].',Plane', 1);
 
-                                // * output *
+                                // * output departures *
                                 echo "
                                 <a href='?site=departures&airport=".$_GET['airport']."&id=".$row['id']."' class='list-group-item".$active."'>
                                     <h4 class='list-group-item-heading'>
@@ -113,11 +106,11 @@
                                     </p>
                                 </a>";
 
-                                // add location
+                                // add location/s for map
                                 if(isset($_GET['id'])) {
                                     // save result for details separate
                                     if($_GET['id'] == $row['id']) {
-                                        $row_details = $row;
+                                        $rowDetails = $row;
                                         $locations[$row['id']] = array(floatval($row['latitude']), floatval($row['longitude']));
                                     }
                                 }
@@ -125,9 +118,9 @@
                                     $locations[$row['id']] = array(floatval($row['latitude']), floatval($row['longitude']));
                                 }
 
-                                // add flightinfo
+                                // add flightinfo for map
                                 $flightinfo = "
-                                ".$flickr->getPhotos($aircrafttype_images, 'q')."
+                                ".$flickr->getPhotos($aircrafttypeImages, 'q')."
                                 <div style='float:left;'>
                                     <h5>".$row['airport_city']."</h5>
                                     Startzeit: ".$row['arrivaltime']." Uhr<br />
@@ -135,7 +128,8 @@
                                     Flugzeugtyp: ".$row['aircrafttype']."<br />
                                     Geschwindigkeit: ".(($row['altitude'] == '') ? "-" : $row['speed']." km/h")."<br />
                                     Flughöhe: ".(($row['altitude'] == '') ? "-" : $row['altitude']." m")."<br />
-                                    Position: ".$row['latitude'].", ".$row['longitude']."
+                                    Position: ".$row['latitude'].", ".$row['longitude']."<br />
+                                    <a href='?site=departures&airport=".$_GET['airport']."&id=".$row['id']."'>›› Details</a>
                                 </div>";
                                 $flightinfos[$row['id']] = str_replace(array("\r\n", "\n", "\r"), ' ', $flightinfo);
                             }
@@ -154,41 +148,39 @@
 		</div>
 		<div class='col-md-9'>";
 
-            if($result_d->num_rows)
-            {
-                if(isset($_GET['id']) AND $_GET['id'] > 0)
-                {
+            if($resultD->num_rows) {
+                if(isset($_GET['id']) AND $_GET['id'] > 0) {
                     // define object
                     $flickr = new Flickr();
 
                     // edit city for flickr and search images of city
-                    $city = substr($row_details['airport_city'], 0, strpos($row_details['airport_city'], ' '));
-                    $city_images = $flickr->searchPhotos($city.',city,attractions', 5);
+                    $city = substr($rowDetails['airport_city'], 0, strpos($rowDetails['airport_city'], ' '));
+                    $cityImages = $flickr->searchPhotos($city.',city,attractions', 5);
 
 
-                    // get impressions
+                    // * output impressions *
                     echo "
                     <div class='panel panel-default'>
                         <div class='panel-body'>
-                            <h2>".$row_details['airport_city']."</h2>
-                            <h4>".$row_details['airport_description']."</h4>
-                            ".$flickr->getPhotos($city_images, 'q')."
+                            <h2>".$rowDetails['airport_city']."</h2>
+                            <h4>".$rowDetails['airport_description']."</h4>
+                            ".$flickr->getPhotos($cityImages, 'q')."
                         </div>
                     </div>
                     <div class='clearfix'></div>";
                 }
-
-                // output map
+                
+                // * output map *
                 include 'googlemaps.php';
             }
-            else
-            {
+            else {
+                // * output error *
                 echo "
                 <div class='alert alert-danger' role='alert'>
                     <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
                     <span class='sr-only'>Hinweis:</span>
                     <b>Keine Abflüge gefunden</b><br />
-                    Bitte betätigen sie den Knop 'Daten aktualisieren'
+                    Bitte betätigen sie den Knopf 'Daten aktualisieren'
                 </div>";
             }
             
