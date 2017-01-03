@@ -12,6 +12,8 @@
 
     /** ** database class ** */
     include_once './classes/Database.class.php';
+    /** ** functions ** */
+    include_once './functions.php';
 
 
     // take session
@@ -109,22 +111,10 @@
     function setError($userValid, $pwValid) {
         // set error
         if($userValid == false) {
-            $_SESSION['error'] = "
-            <div class='alert alert-danger' role='alert'>
-                <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
-                <span class='sr-only'>Hinweis:</span>
-                <b>Benutzer nicht vorhanden</b><br />
-                Bitte geben Sie einen gültigen Benutzernamen ein.
-            </div>";
+            $_SESSION['error'] = getMessage("Hinweis:", "Benutzer nicht vorhanden", "Bitte geben Sie einen gültigen Benutzernamen ein");
         }
         elseif($pwValid == false) {
-            $_SESSION['error'] = "
-            <div class='alert alert-danger' role='alert'>
-                    <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
-                    <span class='sr-only'>Hinweis:</span>
-                    <b>Passwort ungültig</b><br />
-                    Bitte geben Sie ein gültiges Passwort ein.
-            </div>";
+            $_SESSION['error'] = getMessage("Hinweis:", "Passwort ungültig", "Bitte geben Sie ein gültiges Passwort ein");
         }
     }
     

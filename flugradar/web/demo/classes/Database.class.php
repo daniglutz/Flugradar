@@ -1,5 +1,8 @@
 <?php
 	
+    /** ** functions ** */
+    include_once './functions.php';
+    
 	/**
 	* database class
 	* 
@@ -77,7 +80,7 @@
 			$result = self::$connect->query(trim($sql));
 			
 			// error handling
-			$this->getError();
+			echo $this->getError();
 			
             // return
 			return $result;
@@ -97,13 +100,7 @@
             // if error
 			if(self::$connect->error) {
                 // construct error text
-				$error_str = "
-				<div class='alert alert-danger' role='alert'>
-					<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
-					<span class='sr-only'>Error:</span>
-					<b>MySQL Error (".self::$connect->errno.")</b><br />
-					".self::$connect->error."
-				</div>";
+                $error_str = getMessage("Error:", "MySQL Error (".self::$connect->errno.")", self::$connect->error);
 			}
 			else {
 				$error_str = "";

@@ -174,14 +174,8 @@
                 include 'googlemaps.php';
             }
             else {
-                // * output error *
-                echo "
-                <div class='alert alert-danger' role='alert'>
-                    <span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>
-                    <span class='sr-only'>Hinweis:</span>
-                    <b>Keine Abflüge gefunden</b><br />
-                    Bitte betätigen sie den Knopf 'Daten aktualisieren'
-                </div>";
+                // * output message *
+                echo getMessage("Hinweis:", "Keine Abflüge gefunden", "Bitte betätigen sie den Knopf 'Daten aktualisieren'");
             }
             
         echo "

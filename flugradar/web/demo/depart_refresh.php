@@ -35,16 +35,16 @@
 			`latitude`,
 			`longitude`
 		) VALUES (
-			".mysql_string($departinfo["ident"]).",
-			".mysql_string($departinfo["origin"]).",
-			".mysql_string($departinfo["destination"]).",
-			".mysql_timestamp($departinfo["estimatedarrivaltime"]).",
-			".mysql_timestamp($departinfo["actualdeparturetime"]).",
-			".mysql_string($departinfo["aircrafttype"]).",
-			".mysql_number($flightinfo["InFlightInfoResult"]["groundspeed"]).",
-			".mysql_number($flightinfo["InFlightInfoResult"]["altitude"]).",
-			".mysql_number($flightinfo["InFlightInfoResult"]["latitude"]).",
-			".mysql_number($flightinfo["InFlightInfoResult"]["longitude"]).")";
+			".getCleanedText($departinfo["ident"]).",
+			".getCleanedText($departinfo["origin"]).",
+			".getCleanedText($departinfo["destination"]).",
+			".getCleanedTimestamp($departinfo["estimatedarrivaltime"]).",
+			".getCleanedTimestamp($departinfo["actualdeparturetime"]).",
+			".getCleanedText($departinfo["aircrafttype"]).",
+			".getCleanedNumber($flightinfo["InFlightInfoResult"]["groundspeed"]).",
+			".getCleanedNumber($flightinfo["InFlightInfoResult"]["altitude"]).",
+			".getCleanedNumber($flightinfo["InFlightInfoResult"]["latitude"]).",
+			".getCleanedNumber($flightinfo["InFlightInfoResult"]["longitude"]).")";
 		
 		// run query
 		$db->query($sql);
