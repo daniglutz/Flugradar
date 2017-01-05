@@ -10,8 +10,8 @@
      */
 
 
-    /** ** database class ** */
-    include_once './classes/Database.class.php';
+    /** ** mysql class ** */
+    include_once './classes/Mysql.class.php';
     /** ** functions ** */
     include_once './functions.php';
 
@@ -42,7 +42,7 @@
         $pwValid = false;
 
         // create database object
-        $db = new Database();
+        $db = new Mysql();
 
         //define SQL query
         $sql = "

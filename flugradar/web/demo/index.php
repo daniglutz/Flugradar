@@ -20,8 +20,8 @@
 	</head>
 	<body>
 		<?php
-			/** ** database class ** */
-			include_once './classes/Database.class.php';
+			/** ** mysql class ** */
+			include_once './classes/Mysql.class.php';
             /** ** flightaware class ** */
             include_once './classes/FlightAware.class.php';
 			/** ** flickr class ** */
@@ -33,7 +33,7 @@
 			session_start();
             
 			// *** create database object ***
-			$db = new Database();
+			$db = new Mysql();
 		?>
 		
 		<?php

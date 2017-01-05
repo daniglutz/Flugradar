@@ -4,17 +4,17 @@
     include_once './functions.php';
     
 	/**
-	* database class
+	* mysql class
 	* 
 	* - {@link __construct}: constructor
 	* - {@link query}: run query and error handling
 	* - {@link getError}: get error message
 	* 
-	* @name    /classes/Database.class.php
+	* @name    /classes/Mysql.class.php
 	* @author  Dario Kuster
 	* @version 19.12.2016
 	*/
-	class Database extends mysqli
+	class Mysql extends mysqli
 	{
 		/**
 		* connect
