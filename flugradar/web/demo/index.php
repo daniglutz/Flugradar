@@ -70,7 +70,7 @@
 			
             // ** include subsite **
             if(isset($_GET['site']) AND isset($_SESSION['user'])) {
-                include $_GET['site'].'.php';
+                include 'sites/'.$_GET['site'].'.php';
             } else {
                 include 'login.php';
             }
