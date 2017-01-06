@@ -4,7 +4,7 @@
 		<div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <form action="actionlogin.php" method="post">
+                    <form action="?site=actionlogin" method="post">
 
                         <?php
                             echo (isset($_SESSION['error'])) ? $_SESSION['error'] : "";

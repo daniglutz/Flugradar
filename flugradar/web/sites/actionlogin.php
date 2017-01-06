@@ -8,17 +8,11 @@
      * @version 28.12.2016
      *  
      */
-
-
-    /** ** mysql class ** */
-    include_once './classes/Mysql.class.php';
-    /** ** functions ** */
-    include_once './functions.php';
-
-
+    
+    
     // take session
     session_start();
-
+    
     // check user data
     userValidate($_POST['user'], $_POST['pwd']);    
 

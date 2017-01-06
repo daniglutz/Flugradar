@@ -1,7 +1,7 @@
 <?php
 	
     /** ** functions ** */
-    include_once './functions.php';
+    require_once('functions.php');
     
 	/**
 	* mysql class
