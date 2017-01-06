@@ -1,11 +1,21 @@
-<!DOCTYPE html>
+<?php
+	
+	/**
+	* site googlemaps
+	* 
+	* @name    sites/googlemaps.php
+	* @author  Dario Kuster
+	* @version 06.01.2017
+	*/
+    
+?>
+
 <html lang="en">
 	
 	<div id="map"></div>
 
 	<script>
 		function myMap() {
-            
 			// location origin
 			var locationOrigin = <?php echo json_encode($locationOrigin) ?>;
 			
@@ -29,7 +39,6 @@
 			
 			// add routes
             for(var i in locations) {
-                
 				// add path
 				var flightPlanCoordinates = [
 					{lat: locationOrigin[0], lng: locationOrigin[1]},
@@ -88,7 +97,6 @@
             
 			// open infowindow, if detail view
 			if(arrayCount(infowindows) === 1) {
-                
 				infowindows[i].open(map, markers[i]);
 			}
 			
@@ -96,7 +104,6 @@
 		}
         
         function arrayCount(array) {
-        
             var c = 0;
             
             for(var key in array) {
@@ -108,7 +115,6 @@
         }
 		
 		function degreeBearing(lat1, lng1, lat2, lng2) {
-        
 			var dLon = getRad(lng2 - lng1);
 			var dPhi = Math.log(Math.tan(getRad(lat2)/2 + Math.PI/4) / Math.tan(getRad(lat1)/2 + Math.PI/4));
 			if(Math.abs(dLon) > Math.PI)
@@ -121,17 +127,14 @@
 		}
 
 		function getRad(deg) {
-            
 			return deg * (Math.PI / 180);
 		}
 
 		function getDegrees(rad) {
-            
 			return rad * 180 / Math.PI;
 		}
 
 		function getBearing(rad) {
-            
 			// convert radians to degrees (as bearing: 0...360)
 			return (getDegrees(rad) + 360) % 360;
 		}

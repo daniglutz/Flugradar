@@ -3,7 +3,7 @@
 	/**
 	* refresh departures
 	* 
-	* @name    depart_refresh.php
+	* @name    sites/depart_refresh.php
 	* @author  Dario Kuster
 	* @version 28.11.2016
 	*/

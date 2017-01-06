@@ -8,7 +8,7 @@
 	* - {@link __call}: XXXX
 	* 
 	* @package Flugradar
-	* @name    /classes/FlightAware.class.php
+	* @name    classes/FlightAware.class.php
 	* @author  Dario Kuster
 	* @version 28.11.2016
 	*/

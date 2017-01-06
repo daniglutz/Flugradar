@@ -3,7 +3,7 @@
     /**
      * can vallidate the login data and give access to the application
      * 
-     * @name    actionlogin.php
+     * @name    sites/actionlogin.php
      * @author  Andreas Trachsel
      * @version 28.12.2016
      *  
@@ -17,7 +17,7 @@
     userValidate($_POST['user'], $_POST['pwd']);    
 
     // login ok
-    header("Location: ./?site=departures&airport=LSZH");
+    header("Location: ./?site=departures&airport=".$_SESSION['standardAirport']);
     
     
 	/**
@@ -41,12 +41,17 @@
         //define SQL query
         $sql = "
         SELECT 
-            `id`,
-            `username`,
-            `password`,
-            `admin`
-        FROM `users`            
-        WHERE `username` = '".$user."'";
+            `users`.`id`,
+            `users`.`username`,
+            `users`.`password`,
+            `users`.`admin`,
+            `user_settings`.`standard_airport`,
+            `user_settings`.`number_entries`,
+            `user_settings`.`refresh_time`
+        FROM `users`
+            LEFT JOIN `user_settings`
+                ON `users`.`id` = `user_settings`.`user_id`
+        WHERE `users`.`username` = '".$user."'";
 
         // *** run query ***
         $result = $db->query($sql);
@@ -90,6 +95,9 @@
         $_SESSION['id'] = $row['id'];
         $_SESSION['user'] = $row['username'];
         $_SESSION['admin'] = $row['admin'];
+        $_SESSION['standardAirport'] = $row['standard_airport'];
+        $_SESSION['numberEntries'] = $row['number_entries'];
+        $_SESSION['refreshTime'] = $row['refresh_time'];
     }
     
 	/**

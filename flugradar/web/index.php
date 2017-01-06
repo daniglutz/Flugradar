@@ -34,9 +34,10 @@
             
 			// *** create database object ***
 			$db = new Mysql();
-		?>
-		
-		<?php
+            
+            
+            // select standard airport
+            $_GET['airport'] = ($_GET['airport'] == '') ? $_SESSION['standardAirport'] : $_GET['airport'];
             
             // ** output menu **
 			echo "

@@ -7,7 +7,7 @@
 	* - {@link searchPhotos}: search photos
 	* - {@link getPhotos}: get photos
 	* 
-	* @name    /classes/Flickr.class.php
+	* @name    classes/Flickr.class.php
 	* @author  Dario Kuster
 	* @version 19.12.2016
 	*/

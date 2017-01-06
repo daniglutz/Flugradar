@@ -10,7 +10,7 @@
 	* - {@link query}: run query and error handling
 	* - {@link getError}: get error message
 	* 
-	* @name    /classes/Mysql.class.php
+	* @name    classes/Mysql.class.php
 	* @author  Dario Kuster
 	* @version 19.12.2016
 	*/

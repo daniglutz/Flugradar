@@ -3,9 +3,9 @@
 	/**
 	* site departures
 	* 
-	* @name    departures.php
+	* @name    sites/departures.php
 	* @author  Dario Kuster
-	* @version 28.11.2016
+	* @version 06.01.2017
 	*/
     
     
@@ -72,7 +72,7 @@
                             ON `last_departures`.`destination` = `airports`.`icao_code`
                     WHERE `last_departures`.`origin` = '".$_GET['airport']."'
                     ORDER BY `last_departures`.`id` DESC
-                    LIMIT 10";
+                    LIMIT ".$_SESSION['numberEntries'];
 
                     // *** run query ***
                     $resultD = $db->query($sql);
@@ -138,7 +138,7 @@
                     }
 
                     echo "
-                    <a href='?site=depart_refresh&airport=".$_GET['airport']."&howMany=10'>
+                    <a href='?site=depart_refresh&airport=".$_GET['airport']."&howMany=".$_SESSION['numberEntries']."'>
                         <button type='submit' class='btn btn-default'>
                             <span class='glyphicon glyphicon-refresh' aria-hidden='true'></span> Daten aktualisieren
                         </button>
