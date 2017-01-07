@@ -123,8 +123,8 @@
                                 ".$flickr->getPhotos($aircrafttypeImages, 'q')."
                                 <div style='float:left;'>
                                     <h5>".$row['airport_city']."</h5>
-                                    Startzeit: ".$row['arrivaltime']." Uhr<br />
-                                    Ankunftszeit: ".$row['departuretime']." Uhr<br />
+                                    Startzeit: ".$row['departuretime']." Uhr<br />
+                                    Ankunftszeit: ".$row['arrivaltime']." Uhr<br />
                                     Flugzeugtyp: ".$row['aircrafttype']."<br />
                                     Geschwindigkeit: ".(($row['altitude'] == '') ? "-" : $row['speed']." km/h")."<br />
                                     Flughöhe: ".(($row['altitude'] == '') ? "-" : $row['altitude']." m")."<br />
