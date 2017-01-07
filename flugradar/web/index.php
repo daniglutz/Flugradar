@@ -37,7 +37,9 @@
             
             
             // select standard airport
-            $_GET['airport'] = ($_GET['airport'] == '') ? $_SESSION['standardAirport'] : $_GET['airport'];
+            if((!isset($_GET['airport']) OR $_GET['airport'] == '') AND isset($_SESSION['standardAirport'])) {
+                $_GET['airport'] = $_SESSION['standardAirport'];
+            }
             
             // ** output menu **
 			echo "
