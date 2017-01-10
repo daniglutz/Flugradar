@@ -46,7 +46,7 @@
 	* @author  Dario Kuster
 	* @version 30.11.2016
 	* 
-	* @param   float number
+	* @param   number number
 	* @return  cleaned number
 	*/
 	function getCleanedNumber($val) {

@@ -1,13 +1,12 @@
 <?php
     
     /**
-     * can vallidate the login data and give access to the application
-     * 
-     * @name    sites/actionlogin.php
-     * @author  Andreas Trachsel
-     * @version 28.12.2016
-     *  
-     */
+    * can vallidate the login data and give access to the application
+    * 
+    * @name    sites/actionlogin.php
+    * @author  Andreas Trachsel
+    * @version 28.12.2016
+    */
     
     
     // take session
@@ -38,7 +37,7 @@
         // create database object
         $db = new Mysql();
 
-        //define SQL query
+        // define SQL query
         $sql = "
         SELECT 
             `users`.`id`,
@@ -92,7 +91,7 @@
 	* @return  void
 	*/
     function setSession($row) {
-        $_SESSION['id'] = $row['id'];
+        $_SESSION['userId'] = $row['id'];
         $_SESSION['user'] = $row['username'];
         $_SESSION['admin'] = $row['admin'];
         $_SESSION['standardAirport'] = $row['standard_airport'];
