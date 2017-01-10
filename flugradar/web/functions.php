@@ -8,7 +8,6 @@
 	* - {@link getCleanedTimestamp}: clean and get timestamp for database
 	* - {@link getCleanedText}:      clean and get text for database
 	* 
-	* @package Flugradar
 	* @name    functions.php
 	* @author  Dario Kuster
 	* @version 30.11.2016
