@@ -1,13 +1,12 @@
 <?php
 	
 	/**
-	* Class for interacting with FlightAware's API
+	* flightaware class
 	* 
-	* - {@link __construct}: XXXX
-	* - {@link request}: XXXX
-	* - {@link __call}: XXXX
+	* - {@link __construct}: constructor
+	* - {@link request}:     actual heavy lifter
+	* - {@link __call}:      calls for requests
 	* 
-	* @package Flugradar
 	* @name    classes/FlightAware.class.php
 	* @author  Dario Kuster
 	* @version 28.11.2016
@@ -15,7 +14,7 @@
 	class FlightAware {
 		
 		/**
-		* Config
+		* config
 		* @access private
 		* @var    array
 		*/
@@ -24,12 +23,11 @@
 		/**
 		* constructor
 		* 
-		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
 		* @return  void
-		* @throws  Exception when the script can't find the config-file
+		* @throws  exception when the script can't find the config-file
 		*/
 		public function __construct() {
 			
@@ -44,17 +42,16 @@
 				throw new Exception('FlightAware: Configuration File Missing!');
 			}
 		}
-
+        
 		/**
-		* The actual heavy lifter
+		* actual heavy lifter
 		*
-		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		*
-		* @param string $function   Name of the flightaware api call
-		* @param array  $parameters Key/Value pair of the parameters
-		* @return string JSON results
+		* @param   string $function
+		* @param   array  $parameters
+		* @return  string
 		*/
 		public function request($function, array $parameters) {
             
@@ -81,14 +78,16 @@
 		}
 
 		/**
-		* Magic calls "$instantiatedFlightAware->[API method name]" for requests
+		* calls for requests
+        *
+		* @author  Dario Kuster
+		* @version 28.11.2016
 		*
-		* @param string $function      Called method name
-		* @param array $parameters     Arguments passed to the method
-		* @return array                Decoded results from API
+		* @param   string $function
+		* @param   array  $parameters
+		* @return  array
 		*/
 		public function __call($function, $parameters) {
-			
 			return $this->request($function, $parameters[0]);
 		}
 	}

@@ -7,8 +7,8 @@
 	* mysql class
 	* 
 	* - {@link __construct}: constructor
-	* - {@link query}: run query and error handling
-	* - {@link getError}: get error message
+	* - {@link query}:       run query and error handling
+	* - {@link getError}:    get error message
 	* 
 	* @name    classes/Mysql.class.php
 	* @author  Dario Kuster
@@ -26,7 +26,6 @@
 		/**
 		* constructor
 		* 
-		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
@@ -67,11 +66,10 @@
 		/**
 		* run query and error handling
 		* 
-		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
-		* @param   string $sql query to run
+		* @param   string $sql
 		* @return  void
 		*/
 		public function query($sql) {
@@ -89,11 +87,10 @@
 		/**
 		* get error message
 		* 
-		* @access  private
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
-		* @return  string detail error message
+		* @return  string
 		*/
 		private function getError() {
             

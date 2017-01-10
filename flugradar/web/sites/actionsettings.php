@@ -22,9 +22,9 @@
 	* @author  Daniel Glutz
 	* @version 28.12.2016
 	* 
-	* @param   string standard airport
-	* @param   number number of entries
-	* @param   number refresh time
+	* @param   string $standardAirport
+	* @param   number $numberEntries
+	* @param   number $refreshTime
 	* @return  void
 	*/
     function updateSettings($standardAirport, $numberEntries, $refreshTime) {

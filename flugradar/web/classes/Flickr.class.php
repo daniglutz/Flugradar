@@ -3,9 +3,9 @@
 	/**
 	* flickr class
 	* 
-	* - {@link __construct}: constructor
+	* - {@link __construct}:  constructor
 	* - {@link searchPhotos}: search photos
-	* - {@link getPhotos}: get photos
+	* - {@link getPhotos}:    get photos
 	* 
 	* @name    classes/Flickr.class.php
 	* @author  Dario Kuster
@@ -23,7 +23,6 @@
 		/**
 		* constructor
 		* 
-		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
@@ -52,13 +51,12 @@
 		/**
 		* search photos
 		*
-		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		*
-		* @param   string  $tags    tags for search
-		* @param   integer $perPage number of results
-		* @return  array array of photos
+		* @param   string  $tags
+		* @param   integer $perPage
+		* @return  array
 		*/
 		public function searchPhotos($tags = '', $perPage = 5) {
 			
@@ -91,13 +89,12 @@
 		/**
 		* get photos
 		* 
-		* @access  public
 		* @author  Dario Kuster
 		* @version 28.11.2016
 		* 
-		* @param   array $photos Array of photos
-		* @param   char  $size   Size of photos
-		* @return  string images tags
+		* @param   array  $photos
+		* @param   string $size
+		* @return  string
 		*/
 		public function getPhotos($photos, $size = 'q') {
 			

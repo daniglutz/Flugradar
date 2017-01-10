@@ -15,6 +15,14 @@
 	<div id="map"></div>
 
 	<script>
+        /**
+        * create map
+        * 
+        * @author  Dario Kuster
+        * @version 28.12.2016
+        * 
+        * @return  void
+        */
 		function myMap() {
 			// location origin
 			var locationOrigin = <?php echo json_encode($locationOrigin) ?>;
@@ -74,7 +82,7 @@
 					scale: 1.5,
 					anchor: new google.maps.Point(11, 20),
 					strokeWeight: 0,
-					rotation: degreeBearing(locationOrigin[0], locationOrigin[1], locations[i][0], locations[i][1])
+					rotation: getDegreeBearing(locationOrigin[0], locationOrigin[1], locations[i][0], locations[i][1])
 				};
 				
 				// add marker
@@ -96,14 +104,23 @@
 			}
             
 			// open infowindow, if detail view
-			if(arrayCount(infowindows) === 1) {
+			if(getArraySize(infowindows) === 1) {
 				infowindows[i].open(map, markers[i]);
 			}
 			
 			map.fitBounds(bounds);
 		}
         
-        function arrayCount(array) {
+        /**
+        * get size of array
+        * 
+        * @author  Dario Kuster
+        * @version 28.12.2016
+        * 
+        * @param   array array
+        * @return  number
+        */
+        function getArraySize(array) {
             var c = 0;
             
             for(var key in array) {
@@ -114,7 +131,19 @@
             return c;
         }
 		
-		function degreeBearing(lat1, lng1, lat2, lng2) {
+        /**
+        * get degree bearing
+        * 
+        * @author  Dario Kuster
+        * @version 28.12.2016
+        * 
+        * @param   number lat1
+        * @param   number lng1
+        * @param   number lat2
+        * @param   number lng2
+        * @return  number
+        */
+		function getDegreeBearing(lat1, lng1, lat2, lng2) {
 			var dLon = getRad(lng2 - lng1);
 			var dPhi = Math.log(Math.tan(getRad(lat2)/2 + Math.PI/4) / Math.tan(getRad(lat1)/2 + Math.PI/4));
 			if(Math.abs(dLon) > Math.PI)
@@ -126,14 +155,41 @@
 			return getBearing(Math.atan2(dLon, dPhi));
 		}
 
+        /**
+        * get rad
+        * 
+        * @author  Dario Kuster
+        * @version 28.12.2016
+        * 
+        * @param   number deg
+        * @return  number
+        */
 		function getRad(deg) {
 			return deg * (Math.PI / 180);
 		}
 
+        /**
+        * get degrees
+        * 
+        * @author  Dario Kuster
+        * @version 28.12.2016
+        * 
+        * @param   number rad
+        * @return  number
+        */
 		function getDegrees(rad) {
 			return rad * 180 / Math.PI;
 		}
 
+        /**
+        * get bearing
+        * 
+        * @author  Dario Kuster
+        * @version 28.12.2016
+        * 
+        * @param   number rad
+        * @return  number
+        */
 		function getBearing(rad) {
 			// convert radians to degrees (as bearing: 0...360)
 			return (getDegrees(rad) + 360) % 360;

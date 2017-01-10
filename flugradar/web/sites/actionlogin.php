@@ -25,8 +25,8 @@
 	* @author  Andreas Trachsel
 	* @version 28.12.2016
 	* 
-	* @param   string user
-	* @param   string password
+	* @param   string $user
+	* @param   string $pw
 	* @return  void
 	*/
     function userValidate($user, $pw) {
@@ -87,7 +87,7 @@
 	* @author  Andreas Trachsel
 	* @version 28.12.2016
 	* 
-	* @param   array query result
+	* @param   array $row
 	* @return  void
 	*/
     function setSession($row) {
@@ -105,8 +105,8 @@
 	* @author  Andreas Trachsel
 	* @version 28.12.2016
 	* 
-	* @param   boolean user valid (true or false)
-	* @param   boolean password valid (true or false)
+	* @param   boolean $userValid
+	* @param   boolean $pwValid
 	* @return  void
 	*/
     function setError($userValid, $pwValid) {

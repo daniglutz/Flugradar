@@ -3,10 +3,10 @@
 	/**
 	* functions
 	* 
-	* - {@link getMessage}: get formatted message
-	* - {@link getCleanedNumber}: clean and get number for database
+	* - {@link getMessage}:          get formatted message
+	* - {@link getCleanedNumber}:    clean and get number for database
 	* - {@link getCleanedTimestamp}: clean and get timestamp for database
-	* - {@link getCleanedText}: clean and get text for database
+	* - {@link getCleanedText}:      clean and get text for database
 	* 
 	* @package Flugradar
 	* @name    functions.php
@@ -21,11 +21,11 @@
 	* @author  Dario Kuster
 	* @version 03.01.2017
 	* 
-	* @param   string title
-	* @param   string subtitle
-	* @param   string message
-	* @return  formatted message
-	*/
+	* @param   string $title
+    * @param   string $subtitle
+    * @param   string $message
+    * @return  string
+    */
     function getMessage($title, $subtitle, $message) {
         // construct message
         $msg = "
@@ -46,8 +46,8 @@
 	* @author  Dario Kuster
 	* @version 30.11.2016
 	* 
-	* @param   number number
-	* @return  cleaned number
+	* @param   number $val
+	* @return  string/number
 	*/
 	function getCleanedNumber($val) {
 		// return number
@@ -60,8 +60,8 @@
 	* @author  Dario Kuster
 	* @version 30.11.2016
 	* 
-	* @param   timestamp timestamp
-	* @return  cleaned timestamp
+	* @param   timestamp $val
+	* @return  string
 	*/
 	function getCleanedTimestamp($val) {
 		// return date
@@ -74,8 +74,8 @@
 	* @author  Dario Kuster
 	* @version 30.11.2016
 	* 
-	* @param   string text
-	* @return  cleaned text
+	* @param   string $val
+	* @return  string
 	*/
 	function getCleanedText($val) {
 		// return text
