@@ -79,8 +79,7 @@
 
                     // *** results? ***
                     if($resultD->num_rows) {
-                        // define object / arrays
-                        $flickr = new Flickr();
+                        // define arrays
                         $locations = array();
                         $flightinfos = array();
 
@@ -150,11 +149,15 @@
 
             if($resultD->num_rows) {
                 if(isset($_GET['id']) AND $_GET['id'] > 0) {
-                    // define object
-                    $flickr = new Flickr();
-
-                    // edit city for flickr and search images of city
-                    $city = substr($rowDetails['airport_city'], 0, strpos($rowDetails['airport_city'], ' '));
+                    // edit city for flickr
+                    if(strpos($rowDetails['airport_city'], ' ') !== false) {
+                        $city = substr($rowDetails['airport_city'], 0, strpos($rowDetails['airport_city'], ' '));
+                    }
+                    else {
+                        $city = $rowDetails['airport_city'];
+                    }
+                    
+                    // search images of city
                     $cityImages = $flickr->searchPhotos($city.',city,attractions', 5);
 
 

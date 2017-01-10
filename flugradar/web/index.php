@@ -35,6 +35,9 @@
 			// *** create database object ***
 			$db = new Mysql();
             
+            // *** create flickr object ***
+            $flickr = new Flickr();
+            
             
             // select standard airport
             if((!isset($_GET['airport']) OR $_GET['airport'] == '') AND isset($_SESSION['standardAirport'])) {
