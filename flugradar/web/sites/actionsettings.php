@@ -31,13 +31,16 @@
         // *** create database object ***
         $db = new Mysql();
         
-        // *** run UPDATE-SQL query ***
-        $db->query("
+		// UPDATE SQL
+		$sql = "
         UPDATE user_settings SET
-            standard_airport= '".getCleanedText($standardAirport)."',
+            standard_airport= ".getCleanedText($standardAirport).",
             number_entries = ".getCleanedNumber($numberEntries).",
             refresh_time= ".getCleanedNumber($refreshTime)."
-        WHERE user_id = ".$_SESSION['userId']);
+        WHERE user_id = ".$_SESSION['userId'];
+        
+		// *** run query ***
+		$db->query($sql);
         
         // *** update session ***
         $_SESSION['standardAirport'] = $standardAirport;

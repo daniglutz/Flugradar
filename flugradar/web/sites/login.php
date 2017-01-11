@@ -16,7 +16,7 @@
                 <div class='panel-body'>
                     <form action='?site=actionlogin' method='post'>
                         
-                        ".((isset($_SESSION['error'])) ? $_SESSION['error'] : "")."
+                        ".((isset($_SESSION['errorLogin'])) ? $_SESSION['errorLogin'] : "")."
                         
                         <div class='form-group'>
                             <label for='user'><h2>Benutzer:</h2></label>
