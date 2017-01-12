@@ -55,11 +55,6 @@
                             <a href='?site=departures&airport=".$_GET['airport']."'>
                                 <span class='glyphicon glyphicon-map-marker' aria-hidden='true'></span> Letzte Abflüge
                             </a>
-                        </li>
-                        <li>
-                            <a href='?site=settings&airport=".$_GET['airport']."'>
-                                <span class='glyphicon glyphicon-cog' aria-hidden='true'></span> Einstellungen
-                            </a>
                         </li>";
                     } else {
                         echo "

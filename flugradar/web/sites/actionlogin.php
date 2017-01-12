@@ -15,8 +15,8 @@
     // check user data
     userValidate($_POST['user'], $_POST['pwd']);    
 
-    // login ok
-    header("Location: ./?site=departures&airport=".$_SESSION['standardAirport']);
+    // login ok -> go to settings
+    header("Location: ./?site=settings&airport=".$_SESSION['standardAirport']);
     
     
 	/**
