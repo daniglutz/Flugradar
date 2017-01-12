@@ -32,6 +32,12 @@
             // *** start/continue session ***
 			session_start();
             
+            // *** refresh site ***
+            if(isset($_SESSION['refreshTime']) AND $_SESSION['refreshTime'] > 0) {
+                $url = "?site=depart_refresh&airport=".$_GET['airport']."&howMany=".$_SESSION['numberEntries'];
+                echo "<meta http-equiv='refresh' content='".$_SESSION['refreshTime']."; url=".$url."' />";
+            }
+            
 			// *** create database object ***
 			$db = new Mysql();
             
