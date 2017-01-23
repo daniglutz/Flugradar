@@ -68,8 +68,20 @@
                             <button type='submit' class='btn btn-default'>Speichern</button>
                         </div>
                         
-                    </form>
-                </div> 
+                    </form>";
+                    
+                    if($_SESSION['admin'] == 1) {
+                        echo "
+                        <div align='center'>
+                            <br />
+                            <a href='?site=newuser&airport=".$_GET['airport']."'>
+                                <button type='button' class='btn btn-default'>Neuer Benutzer</button>
+                            </a>
+                        </div>";
+                    }
+                    
+                    echo "
+                </div>
             </div>
         </div>
     </div>";

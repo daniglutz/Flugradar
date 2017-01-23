@@ -110,15 +110,15 @@
     function setError($userValid, $pwValid) {
         // user not valid
         if($userValid == false) {
-            $_SESSION['errorLogin'] = getMessage("Hinweis:", "Benutzer nicht vorhanden", "Bitte geben Sie einen gültigen Benutzernamen ein");
+            $_SESSION['error'] = getMessage("Hinweis:", "Benutzer nicht vorhanden", "Bitte geben Sie einen gültigen Benutzernamen ein");
         }
         // password not valid
         elseif($pwValid == false) {
-            $_SESSION['errorLogin'] = getMessage("Hinweis:", "Passwort ungültig", "Bitte geben Sie ein gültiges Passwort ein");
+            $_SESSION['error'] = getMessage("Hinweis:", "Passwort ungültig", "Bitte geben Sie ein gültiges Passwort ein");
         }
         // no error
         else {
-            $_SESSION['errorLogin'] = null;
+            $_SESSION['error'] = null;
         }
     }
     

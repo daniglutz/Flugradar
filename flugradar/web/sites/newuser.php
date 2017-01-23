@@ -1,9 +1,9 @@
 <?php
 	
 	/**
-	* site login
+	* site user create
 	* 
-	* @name    sites/login.php
+	* @name    sites/user_create.php
 	* @author  Dario Kuster
 	* @version 06.01.2017
 	*/
@@ -14,7 +14,7 @@
 		<div class='col-md-12'>
             <div class='panel panel-default'>
                 <div class='panel-body'>
-                    <form action='?site=actionlogin' method='post'>
+                    <form action='?site=actionnewuser' method='post'>
                         
                         ".((isset($_SESSION['error'])) ? $_SESSION['error'] : "")."
                         
@@ -28,11 +28,23 @@
                             <input type='password' name='pwd' class='form-control' id='pwd' required=''>  
                         </div>
 
+                        <div class='form-group'>
+                            <label for='admin'><h2>Admin:</h2></label>
+                            <input type='checkbox' name='admin' class='form-control' id='admin'>  
+                        </div>
+
                         <div align='center'>
-                            <button type='submit' class='btn btn-default'>Anmelden</button>
+                            <button type='submit' class='btn btn-default'>Erstellen</button>
                         </div>
 
                     </form>
+                    
+                    <div align='center'>
+                        <br />
+                        <a href='?site=settings&airport=".$_GET['airport']."'>
+                            <button type='button' class='btn btn-default'>zurück</button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

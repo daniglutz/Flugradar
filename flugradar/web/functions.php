@@ -7,10 +7,11 @@
 	* - {@link getCleanedNumber}:    clean and get number for database
 	* - {@link getCleanedTimestamp}: clean and get timestamp for database
 	* - {@link getCleanedText}:      clean and get text for database
+	* - {@link getCleanedCheckbox}:  clean and get checkbox for database
 	* 
 	* @name    functions.php
 	* @author  Dario Kuster
-	* @version 30.11.2016
+	* @version 23.01.2017
 	*/
     
     
@@ -79,6 +80,20 @@
 	function getCleanedText($val) {
 		// return text
 		return "'".str_replace(array("'", "´"), "`", $val)."'";
+	}
+	
+	/**
+	* clean and get checkbox for database
+	* 
+	* @author  Dario Kuster
+	* @version 23.01.2017
+	* 
+	* @param   string $val
+	* @return  integer
+	*/
+	function getCleanedCheckbox($val) {
+		// return value
+        return ($val == 'on') ? 1 : 0;
 	}
 	
 ?>
