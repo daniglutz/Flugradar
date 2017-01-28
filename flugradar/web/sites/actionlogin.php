@@ -37,41 +37,23 @@
         // create database object
         $db = new Mysql();
 
-        // define SQL query
-        $sql = "
-        SELECT 
-            `users`.`id`,
-            `users`.`username`,
-            `users`.`password`,
-            `users`.`admin`,
-            `user_settings`.`standard_airport`,
-            `user_settings`.`number_entries`,
-            `user_settings`.`refresh_time`
-        FROM `users`
-            LEFT JOIN `user_settings`
-                ON `users`.`id` = `user_settings`.`user_id`
-        WHERE `users`.`username` = '".$user."'";
-
-        // *** run query ***
-        $result = $db->query($sql);
+        // *** get user ***
+        $userobj = $db->getUser($user);
 
         // *** results? ***
-        if($result->num_rows) {
-            // ** save result **
-            $row = $result->fetch_assoc();
-
+        if(isset($userobj)) {
             // check username
-            if($row['username'] == $user) {
+            if($userobj->getUsername() == $user) {
                 $userValid = true;
             }
             // check password
-            if(password_verify($pw, $row['password'])) {
+            if(password_verify($pw, $userobj->getPassword())) {
                 $pwValid = true;
             }
 
             // set session
             if($userValid AND $pwValid) {
-                setSession($row);
+                setSession($userobj);
             }
         }
         
@@ -85,16 +67,16 @@
 	* @author  Andreas Trachsel
 	* @version 28.12.2016
 	* 
-	* @param   array $row
+	* @param   object $userobj
 	* @return  void
 	*/
-    function setSession($row) {
-        $_SESSION['userId'] = $row['id'];
-        $_SESSION['user'] = $row['username'];
-        $_SESSION['admin'] = $row['admin'];
-        $_SESSION['standardAirport'] = $row['standard_airport'];
-        $_SESSION['numberEntries'] = $row['number_entries'];
-        $_SESSION['refreshTime'] = $row['refresh_time'];
+    function setSession($userobj) {
+        $_SESSION['userId'] = $userobj->getId();
+        $_SESSION['user'] = $userobj->getUsername();
+        $_SESSION['admin'] = $userobj->getAdmin();
+        $_SESSION['standardAirport'] = $userobj->getStandardAirport();
+        $_SESSION['numberEntries'] = $userobj->getNumberEntries();
+        $_SESSION['refreshTime'] = $userobj->getRefreshTime();
     }
     
 	/**

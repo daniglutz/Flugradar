@@ -13,11 +13,7 @@
 	*/
 	class Flickr {
 		
-		/**
-		* config
-		* @access private
-		* @var    array
-		*/
+		// Variabless
 		private $config;
 		
 		/**
@@ -121,5 +117,3 @@
 			}
 		}
 	}
-	
-?>

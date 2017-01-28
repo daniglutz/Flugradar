@@ -41,17 +41,11 @@
         // create database object
         $db = new Mysql();
 
-        // define SQL query
-        $sql = "
-        SELECT *
-        FROM `users`
-        WHERE `username` = '".$user."'";
-
-        // *** run query ***
-        $result = $db->query($sql);
+        // *** get user ***
+        $userobj = $db->getUser($user);
 
         // *** results? ***
-        if($result->num_rows) {
+        if(isset($userobj)) {
             // set error
             $_SESSION['error'] = getMessage("Hinweis:", "Benutzer existiert schon", "Bitte geben Sie einen anderen Benutzernamen ein");
         } else {

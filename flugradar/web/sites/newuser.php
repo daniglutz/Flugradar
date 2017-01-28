@@ -11,7 +11,8 @@
     
     echo "
  	<div class='row'>
-		<div class='col-md-12'>
+		<div class='col-md-4'></div>
+        <div class='col-md-4'>
             <div class='panel panel-default'>
                 <div class='panel-body'>
                     <form action='?site=actionnewuser' method='post'>
@@ -30,7 +31,7 @@
 
                         <div class='form-group'>
                             <label for='admin'><h2>Admin:</h2></label>
-                            <input type='checkbox' name='admin' class='form-control' id='admin'>  
+                            <input type='checkbox' name='admin' class='checkbox' id='admin'>  
                         </div>
 
                         <div align='center'>
@@ -48,6 +49,7 @@
                 </div>
             </div>
         </div>
+        <div class='col-md-4'></div>
     </div>";
     
 ?>

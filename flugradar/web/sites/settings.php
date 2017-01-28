@@ -11,7 +11,8 @@
     
     echo "
  	<div class='row'>
-		<div class='col-md-12'>
+        <div class='col-md-4'></div>
+		<div class='col-md-4'>
             <div class='panel panel-default'>
                 <div class='panel-body'>
                     <form action='?site=actionsettings' method='post'>
@@ -19,33 +20,22 @@
                         <div class='form-group'>
                             <label for='standardAirport'><h2>Standard-Flughafen:</h2></label>";
 
-                            // *** define query ***
-                            $sql = "
-                            SELECT
-                                `icao_code`,
-                                `description`,
-                                `latitude`,
-                                `longitude`
-                            FROM `airports`
-                            WHERE `latitude` IS NOT NULL AND `longitude` IS NOT NULL
-                            ORDER BY `description`";
-
-                            // *** run query ***
-                            $result = $db->query($sql);
+                            // *** get aiports ***
+                            $airports = $db->getAirports();
 
                             // *** results? ***
-                            if($result->num_rows) {
+                            if(isset($airports)) {
                                 echo "<select class='form-control' id='standardAirport' name='standardAirport' >";
 
-                                    // ** loop results **
-                                    while($row = $result->fetch_assoc()) {
-                                        // * output dropdown for airports *
-                                        if ($_SESSION['standardAirport'] == $row['icao_code']) {
-                                            echo "<option value='".$row['icao_code']."' selected>".$row['description']."</option>";
-                                        } else {
-                                            echo "<option value='".$row['icao_code']."'>".$row['description']."</option>";
-                                        }
+                                // ** loop airports **
+                                foreach ($airports as $airport) {
+                                    // * output dropdown *
+                                    if ($_SESSION['standardAirport'] == $airport->getIcaoCode()) {
+                                        echo "<option value='".$airport->getIcaoCode()."' selected>".$airport->getDescription()."</option>";
+                                    } else {
+                                        echo "<option value='".$airport->getIcaoCode()."'>".$airport->getDescription()."</option>";
                                     }
+                                }
 
                                 echo "</select>";
                             }
@@ -84,6 +74,7 @@
                 </div>
             </div>
         </div>
+        <div class='col-md-4'></div>
     </div>";
     
 ?>

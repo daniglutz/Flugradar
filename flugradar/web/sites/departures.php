@@ -16,32 +16,21 @@
                 <div class='panel-body'>
                     <label for='flughafen'><h4>Abflug-Flughafen:</h4></label>";
 
-                    // *** define query ***
-                    $sql = "
-                    SELECT
-                        `icao_code`,
-                        `description`,
-                        `latitude`,
-                        `longitude`
-                    FROM `airports`
-                    WHERE `latitude` IS NOT NULL AND `longitude` IS NOT NULL
-                    ORDER BY `description`";
-
-                    // *** run query ***
-                    $resultA = $db->query($sql);
+                    // *** get aiports ***
+                    $airports = $db->getAirports();
 
                     // *** results? ***
-                    if($resultA->num_rows) {
+                    if(isset($airports)) {
                         echo "<select class='form-control' id='flughafen' required onchange=\"location.href = '?site=departures&airport=' + this.value;\">";
 
-                            // ** loop results **
-                            while($row = $resultA->fetch_assoc()) {
-                                // * output dropdown for airports *
-                                if($_GET['airport'] == $row['icao_code']) {
-                                    echo "<option value='".$row['icao_code']."' selected>".$row['description']."</option>";
-                                    $locationOrigin = array(floatval($row['latitude']), floatval($row['longitude']));
+                            // ** loop airports **
+                            foreach ($airports as $airport) {
+                                // * output dropdown *
+                                if($_GET['airport'] == $airport->getIcaoCode()) {
+                                    echo "<option value='".$airport->getIcaoCode()."' selected>".$airport->getDescription()."</option>";
+                                    $locationOrigin = array(floatval($airport->getLatitude()), floatval($airport->getLongitude()));
                                 } else {
-                                    echo "<option value='".$row['icao_code']."'>".$row['description']."</option>";
+                                    echo "<option value='".$airport->getIcaoCode()."'>".$airport->getDescription()."</option>";
                                 }
                             }
 
@@ -50,87 +39,64 @@
 
 
                     echo "<h4>Flüge:</h4>";
-
-                    // *** define query ***
-                    $sql = "
-                    SELECT
-                        `last_departures`.`id`,
-                        `last_departures`.`flight_ident`,
-                        `last_departures`.`origin`,
-                        `last_departures`.`destination`,
-                        `airports`.`city` AS `airport_city`,
-                        `airports`.`description` AS `airport_description`,
-                        DATE_FORMAT(`last_departures`.`departuretime`, '%H:%i') AS `departuretime`,
-                        DATE_FORMAT(`last_departures`.`arrivaltime`, '%H:%i') AS `arrivaltime`,
-                        `last_departures`.`aircrafttype`,
-                        `last_departures`.`speed`,
-                        `last_departures`.`altitude`,
-                        `last_departures`.`latitude`,
-                        `last_departures`.`longitude`
-                    FROM `last_departures`
-                        LEFT JOIN `airports`
-                            ON `last_departures`.`destination` = `airports`.`icao_code`
-                    WHERE `last_departures`.`origin` = '".$_GET['airport']."'
-                    ORDER BY `last_departures`.`id` DESC
-                    LIMIT ".$_SESSION['numberEntries'];
-
-                    // *** run query ***
-                    $resultD = $db->query($sql);
+                    
+                    // *** get departures ***
+                    $departures = $db->getDepartures($_GET['airport'], $_SESSION['numberEntries']);
 
                     // *** results? ***
-                    if($resultD->num_rows) {
+                    if(isset($departures)) {
                         // define arrays
                         $locations = array();
                         $flightinfos = array();
 
                         echo "<div class='list-group'>";
 
-                            // ** loop results **
-                            while($row = $resultD->fetch_assoc()) {
+                            // ** loop departures **
+                            foreach ($departures as $departure) {
                                 // set active class
-                                $active = (isset($_GET['id']) AND $_GET['id'] == $row['id']) ? ' active' : '';
+                                $active = (isset($_GET['id']) AND $_GET['id'] == $departure->getId()) ? ' active' : '';
 
                                 // search images of aircrafttype
-                                $aircrafttypeImages = $flickr->searchPhotos($row['aircrafttype'].',Plane', 1);
+                                $aircrafttypeImages = $flickr->searchPhotos($departure->getAircrafttype().',Plane', 1);
 
                                 // * output departures *
                                 echo "
-                                <a href='?site=departures&airport=".$_GET['airport']."&id=".$row['id']."' class='list-group-item".$active."'>
+                                <a href='?site=departures&airport=".$_GET['airport']."&id=".$departure->getId()."' class='list-group-item".$active."'>
                                     <h4 class='list-group-item-heading'>
-                                        ".$row["airport_city"]."
+                                        ".$departure->getAirportCity()."
                                     </h4>
                                     <p class='list-group-item-text'>
-                                        <span class='glyphicon glyphicon-export' aria-hidden='true'></span> Startzeit: ".$row["departuretime"]." Uhr<br />
-                                        <span class='glyphicon glyphicon-import' aria-hidden='true'></span> Ankunftszeit: ".$row["arrivaltime"]." Uhr<br />
+                                        <span class='glyphicon glyphicon-export' aria-hidden='true'></span> Startzeit: ".$departure->getDeparturetime()." Uhr<br />
+                                        <span class='glyphicon glyphicon-import' aria-hidden='true'></span> Ankunftszeit: ".$departure->getArrivaltime()." Uhr<br />
                                     </p>
                                 </a>";
 
                                 // add location/s for map
                                 if(isset($_GET['id'])) {
                                     // save result for details separate
-                                    if($_GET['id'] == $row['id']) {
-                                        $rowDetails = $row;
-                                        $locations[$row['id']] = array(floatval($row['latitude']), floatval($row['longitude']));
+                                    if($_GET['id'] == $departure->getId()) {
+                                        $dDetails = $departure;
+                                        $locations[$departure->getId()] = array(floatval($departure->getLatitude()), floatval($departure->getLongitude()));
                                     }
                                 }
                                 else {
-                                    $locations[$row['id']] = array(floatval($row['latitude']), floatval($row['longitude']));
+                                    $locations[$departure->getId()] = array(floatval($departure->getLatitude()), floatval($departure->getLongitude()));
                                 }
 
                                 // add flightinfo for map
                                 $flightinfo = "
                                 ".$flickr->getPhotos($aircrafttypeImages, 'q')."
                                 <div style='float:left;'>
-                                    <h5>".$row['airport_city']."</h5>
-                                    Startzeit: ".$row['departuretime']." Uhr<br />
-                                    Ankunftszeit: ".$row['arrivaltime']." Uhr<br />
-                                    Flugzeugtyp: ".$row['aircrafttype']."<br />
-                                    Geschwindigkeit: ".(($row['altitude'] == '') ? "-" : $row['speed']." km/h")."<br />
-                                    Flughöhe: ".(($row['altitude'] == '') ? "-" : $row['altitude']." m")."<br />
-                                    Position: ".$row['latitude'].", ".$row['longitude']."<br />
-                                    <a href='?site=departures&airport=".$_GET['airport']."&id=".$row['id']."'>›› Details</a>
+                                    <h5>".$departure->getAirportCity()."</h5>
+                                    Startzeit: ".$departure->getDeparturetime()." Uhr<br />
+                                    Ankunftszeit: ".$departure->getArrivaltime()." Uhr<br />
+                                    Flugzeugtyp: ".$departure->getAircrafttype()."<br />
+                                    Geschwindigkeit: ".(($departure->getSpeed() == '') ? "-" : $departure->getSpeed()." km/h")."<br />
+                                    Flughöhe: ".(($departure->getAltitude() == '') ? "-" : $departure->getAltitude()." m")."<br />
+                                    Position: ".$departure->getLatitude().", ".$departure->getLongitude()."<br />
+                                    <a href='?site=departures&airport=".$_GET['airport']."&id=".$departure->getId()."'>›› Details</a>
                                 </div>";
-                                $flightinfos[$row['id']] = str_replace(array("\r\n", "\n", "\r"), ' ', $flightinfo);
+                                $flightinfos[$departure->getId()] = str_replace(array("\r\n", "\n", "\r"), ' ', $flightinfo);
                             }
 
                         echo "</div>";
@@ -147,14 +113,14 @@
 		</div>
 		<div class='col-md-9'>";
 
-            if($resultD->num_rows) {
+            if(isset($departures)) {
                 if(isset($_GET['id']) AND $_GET['id'] > 0) {
                     // edit city for flickr
-                    if(strpos($rowDetails['airport_city'], ' ') !== false) {
-                        $city = substr($rowDetails['airport_city'], 0, strpos($rowDetails['airport_city'], ' '));
+                    if(strpos($dDetails->getAirportCity(), ' ') !== false) {
+                        $city = substr($dDetails->getAirportCity(), 0, strpos($dDetails->getAirportCity(), ' '));
                     }
                     else {
-                        $city = $rowDetails['airport_city'];
+                        $city = $dDetails->getAirportCity();
                     }
                     
                     // search images of city
@@ -165,8 +131,8 @@
                     echo "
                     <div class='panel panel-default'>
                         <div class='panel-body'>
-                            <h2>".$rowDetails['airport_city']."</h2>
-                            <h4>".$rowDetails['airport_description']."</h4>
+                            <h2>".$dDetails->getAirportCity()."</h2>
+                            <h4>".$dDetails->getAirportDescription()."</h4>
                             ".$flickr->getPhotos($cityImages, 'q')."
                         </div>
                     </div>

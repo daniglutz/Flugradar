@@ -13,11 +13,7 @@
 	*/
 	class FlightAware {
 		
-		/**
-		* config
-		* @access private
-		* @var    array
-		*/
+		// Variables
 		private $config;
 		
 		/**
@@ -30,7 +26,7 @@
 		* @throws  exception when the script can't find the config-file
 		*/
 		public function __construct() {
-			
+            
 			// link config-file
 			$configFile = "./configs/config.ini";
 			
@@ -91,5 +87,3 @@
 			return $this->request($function, $parameters[0]);
 		}
 	}
-	
-?>
