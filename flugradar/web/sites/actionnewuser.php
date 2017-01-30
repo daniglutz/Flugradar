@@ -29,10 +29,10 @@
     
     
 	/**
-	* check whether user and password are valid
+	* check if user exist
 	* 
-	* @author  Andreas Trachsel
-	* @version 28.12.2016
+	* @author  Dario Kuster
+	* @version 30.01.2017
 	* 
 	* @param   string $user
 	* @return  void
@@ -57,7 +57,7 @@
 	* create user
 	* 
 	* @author  Dario Kuster
-	* @version 28.12.2016
+	* @version 30.01.2017
 	* 
 	* @param   string $user
 	* @param   string $pwd
