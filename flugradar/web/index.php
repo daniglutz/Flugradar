@@ -50,31 +50,22 @@
                 $_GET['airport'] = $_SESSION['standardAirport'];
             }
             
-            // ** output menu **
-			echo "
-            <nav class='navbar navbar-default navbar-fixed-top'>
-                <ul class='nav navbar-nav'>";
-                    
-                    if(isset($_SESSION['user'])) {
-                        echo "
+            // ** output menu/logo **
+            if(isset($_SESSION['user'])) {
+                echo "
+                <nav class='navbar navbar-default navbar-fixed-top'>
+                    <ul class='nav navbar-nav'>
                         <li>
                             <a href='?site=departures&airport=".$_GET['airport']."'>
                                 <span class='glyphicon glyphicon-map-marker' aria-hidden='true'></span> Letzte Abflüge
                             </a>
-                        </li>";
-                    } else {
-                        echo "
-                        <li>
-                            <a href='?site=login'>
-                                <span class='glyphicon glyphicon-log-in' aria-hidden='true'></span> Login
-                            </a>
-                        </li>";
-                    }
-                    
-                    echo "
-                </ul>
-            </nav>";
-			
+                        </li>
+                    </ul>
+                </nav>";
+            } else {
+                echo "<h1>LOGO</h1>";
+            }
+            
             // ** include subsite **
             if(isset($_GET['site']) AND ($_GET['site'] == 'actionlogin' OR isset($_SESSION['user']))) {
                 include 'sites/'.$_GET['site'].'.php';
