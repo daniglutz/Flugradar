@@ -91,8 +91,8 @@
                                     Startzeit: ".$departure->getDeparturetime()." Uhr<br />
                                     Ankunftszeit: ".$departure->getArrivaltime()." Uhr<br />
                                     Flugzeugtyp: ".$departure->getAircrafttype()."<br />
-                                    Geschwindigkeit: ".(($departure->getSpeed() == '') ? "-" : $departure->getSpeed()." km/h")."<br />
-                                    Flughöhe: ".(($departure->getAltitude() == '') ? "-" : $departure->getAltitude()." m")."<br />
+                                    Geschwindigkeit: ".(($departure->getSpeed() == '') ? "-" : ($departure->getSpeed() * 1.852)." km/h")."<br />
+                                    Flughöhe: ".(($departure->getAltitude() == '') ? "-" : ($departure->getAltitude() * 30)." m")."<br />
                                     Position: ".$departure->getLatitude().", ".$departure->getLongitude()."<br />
                                     <a href='?site=departures&airport=".$_GET['airport']."&id=".$departure->getId()."'>›› Details</a>
                                 </div>";
