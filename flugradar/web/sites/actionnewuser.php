@@ -11,15 +11,15 @@
     
     // check username
     checkUsername($_POST['user']);    
-
+    
     // if no errors
     if(!isset($_SESSION['error'])) {
         // encrypt password
         $pwd_encrypt = password_hash($_POST['pwd'], PASSWORD_BCRYPT);
-
+        
         // create user
         createUser($_POST['user'], $pwd_encrypt, $_POST['admin']);
-
+        
         // redirect
         header("Location: ./?site=settings&airport=".$_SESSION['standardAirport']);
     } else {
@@ -28,15 +28,15 @@
     }
     
     
-	/**
-	* check if user exist
-	* 
-	* @author  Dario Kuster
-	* @version 30.01.2017
-	* 
-	* @param   string $user
-	* @return  void
-	*/
+    /**
+    * check if user exist
+    * 
+    * @author  Dario Kuster
+    * @version 30.01.2017
+    * 
+    * @param   string $user
+    * @return  void
+    */
     function checkUsername($user) {
         // create database object
         $db = new Mysql();
@@ -53,17 +53,17 @@
         }
     }
     
-	/**
-	* create user
-	* 
-	* @author  Dario Kuster
-	* @version 30.01.2017
-	* 
-	* @param   string $user
-	* @param   string $pwd
-	* @param   string $admin
-	* @return  void
-	*/
+    /**
+    * create user
+    * 
+    * @author  Dario Kuster
+    * @version 30.01.2017
+    * 
+    * @param   string $user
+    * @param   string $pwd
+    * @param   string $admin
+    * @return  void
+    */
     function createUser($user, $pwd, $admin) {
         // create database object
         $db = new Mysql();

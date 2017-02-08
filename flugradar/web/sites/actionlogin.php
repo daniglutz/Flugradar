@@ -14,32 +14,32 @@
     
     // check user data
     userValidate($_POST['user'], $_POST['pwd']);    
-
+    
     // login ok -> go to settings
     header("Location: ./?site=settings&airport=".$_SESSION['standardAirport']);
     
     
-	/**
-	* check whether user and password are valid
-	* 
-	* @author  Andreas Trachsel
-	* @version 28.12.2016
-	* 
-	* @param   string $user
-	* @param   string $pw
-	* @return  void
-	*/
+    /**
+    * check whether user and password are valid
+    * 
+    * @author  Andreas Trachsel
+    * @version 28.12.2016
+    * 
+    * @param   string $user
+    * @param   string $pw
+    * @return  void
+    */
     function userValidate($user, $pw) {
         // variables for access validate
         $userValid = false;
         $pwValid = false;
-
+        
         // create database object
         $db = new Mysql();
-
+        
         // *** get user ***
         $userobj = $db->getUser($user);
-
+        
         // *** results? ***
         if(isset($userobj)) {
             // check username
@@ -50,7 +50,7 @@
             if(password_verify($pw, $userobj->getPassword())) {
                 $pwValid = true;
             }
-
+            
             // set session
             if($userValid AND $pwValid) {
                 setSession($userobj);
@@ -61,15 +61,15 @@
         setError($userValid, $pwValid);
     }
     
-	/**
-	* set session
-	* 
-	* @author  Andreas Trachsel
-	* @version 28.12.2016
-	* 
-	* @param   object $userobj
-	* @return  void
-	*/
+    /**
+    * set session
+    * 
+    * @author  Andreas Trachsel
+    * @version 28.12.2016
+    * 
+    * @param   object $userobj
+    * @return  void
+    */
     function setSession($userobj) {
         $_SESSION['userId'] = $userobj->getId();
         $_SESSION['user'] = $userobj->getUsername();
@@ -79,16 +79,16 @@
         $_SESSION['refreshTime'] = $userobj->getRefreshTime();
     }
     
-	/**
-	* set error
-	* 
-	* @author  Andreas Trachsel
-	* @version 28.12.2016
-	* 
-	* @param   boolean $userValid
-	* @param   boolean $pwValid
-	* @return  void
-	*/
+    /**
+    * set error
+    * 
+    * @author  Andreas Trachsel
+    * @version 28.12.2016
+    * 
+    * @param   boolean $userValid
+    * @param   boolean $pwValid
+    * @return  void
+    */
     function setError($userValid, $pwValid) {
         // user not valid
         if($userValid == false) {

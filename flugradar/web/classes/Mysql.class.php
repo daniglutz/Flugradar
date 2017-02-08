@@ -1,5 +1,5 @@
 <?php
-	
+
     /** ** airport class ** */
     require_once('./classes/Airport.class.php');
     /** ** departure class ** */
@@ -8,122 +8,122 @@
     require_once('./classes/User.class.php'); 
     /** ** functions ** */
     require_once('./functions.php');
-    
-	/**
-	* mysql class
-	* 
-	* - {@link __construct}:   constructor
-	* - {@link query}:         run query and error handling
-	* - {@link getError}:      get error message
+
+    /**
+    * mysql class
+    * 
+    * - {@link __construct}:   constructor
+    * - {@link query}:         run query and error handling
+    * - {@link getError}:      get error message
     * - {@link getAirports}:   get airports
     * - {@link getDepartures}: get departures
     * - {@link getUser}:       get user
-	* 
-	* @name    classes/Mysql.class.php
-	* @author  Dario Kuster
-	* @version 27.01.2017
-	*/
-	class Mysql extends mysqli {
-		
-        // Variables
-		protected static $connect;
-		
-		/**
-		* constructor
-		* 
-		* @author  Dario Kuster
-		* @version 28.11.2016
-		* 
-		* @return  void
-		* @throws  exception when the script can't find the config-file
-		*/
-		public function __construct() {
-            
-			if(!isset(self::$connect)) {
-				// link config-file
-				$configFile = "./configs/config.ini";
-				
+    * 
+    * @name    classes/Mysql.class.php
+    * @author  Dario Kuster
+    * @version 27.01.2017
+    */
+    class Mysql extends mysqli {
+
+        // variable
+        protected static $connect;
+
+        /**
+        * constructor
+        * 
+        * @author  Dario Kuster
+        * @version 28.11.2016
+        * 
+        * @return  void
+        * @throws  exception when the script can't find the config-file
+        */
+        public function __construct() {
+
+            if(!isset(self::$connect)) {
+                // link config-file
+                $configFile = "./configs/config.ini";
+
                 // if conig-file exists
-				if(file_exists($configFile)) {
-					$config = parse_ini_file($configFile, true);
-					$dbdata = $config['mysql'];
-					
-					if(isset($dbdata)) {
-						self::$connect = new mysqli($dbdata['host'], $dbdata['username'], $dbdata['password'], $dbdata['database']);
-						
-						if(self::$connect->connect_error) {
-							throw new Exception("MySQL: Fehler bei der MySQL-Verbindung!");
-						}
-					}
-					else {
-						throw new Exception("MySQL: Zugriffsdaten in Config-File fehlen!");
-					}
-				}
-				else {
-					throw new Exception("MySQL: Config-File fehlt!");
-				}
-			}
-			
+                if(file_exists($configFile)) {
+                    $config = parse_ini_file($configFile, true);
+                    $dbdata = $config['mysql'];
+
+                    if(isset($dbdata)) {
+                        self::$connect = new mysqli($dbdata['host'], $dbdata['username'], $dbdata['password'], $dbdata['database']);
+
+                        if(self::$connect->connect_error) {
+                            throw new Exception("MySQL: Fehler bei der MySQL-Verbindung!");
+                        }
+                    }
+                    else {
+                        throw new Exception("MySQL: Zugriffsdaten in Config-File fehlen!");
+                    }
+                }
+                else {
+                    throw new Exception("MySQL: Config-File fehlt!");
+                }
+            }
+
             // return
-			return self::$connect;
-		}
-		
-		/**
-		* run query and error handling
-		* 
-		* @author  Dario Kuster
-		* @version 28.11.2016
-		* 
-		* @param   string $sql
-		* @return  void
-		*/
-		public function query($sql) {
-            
-			// remove spaces and run query
-			$result = self::$connect->query(trim($sql));
-			
-			// error handling
-			echo $this->getError();
-			
+            return self::$connect;
+        }
+
+        /**
+        * run query and error handling
+        * 
+        * @author  Dario Kuster
+        * @version 28.11.2016
+        * 
+        * @param   string $sql
+        * @return  void
+        */
+        public function query($sql) {
+
+            // remove spaces and run query
+            $result = self::$connect->query(trim($sql));
+
+            // error handling
+            echo $this->getError();
+
             // return
-			return $result;
-		}
-		
-		/**
-		* get error message
-		* 
-		* @author  Dario Kuster
-		* @version 28.11.2016
-		* 
-		* @return  string
-		*/
-		private function getError() {
+            return $result;
+        }
+
+        /**
+        * get error message
+        * 
+        * @author  Dario Kuster
+        * @version 28.11.2016
+        * 
+        * @return  string
+        */
+        private function getError() {
             
             // if error
-			if(self::$connect->error) {
+            if(self::$connect->error) {
                 // construct error text
                 $error_str = getMessage("Error:", "MySQL Error (".self::$connect->errno.")", self::$connect->error);
-			}
-			else {
-				$error_str = "";
-			}
-			
+            }
+            else {
+                $error_str = "";
+            }
+
             // return
-			return $error_str;
-		}
-        
-		/**
-		* get airports
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  array
-		*/
+            return $error_str;
+        }
+
+        /**
+        * get airports
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  array
+        */
         public function getAirports() {
             // create array
             $airports = array();
-            
+
             // *** define query ***
             $sql = "
             SELECT
@@ -134,10 +134,10 @@
             FROM `airports`
             WHERE `latitude` IS NOT NULL AND `longitude` IS NOT NULL
             ORDER BY `description`";
-            
+
             // *** run query ***
             $result = $this->query($sql);
-            
+
             // *** results? ***
             if($result->num_rows) {
                 // loop and save in array
@@ -153,21 +153,21 @@
             // return
             return $airports;
        }
-       
-		/**
-		* get departures
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
+
+        /**
+        * get departures
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
         * @param   string $airport
         * @param   string $numberEntries
-		* @return  array
-		*/
+        * @return  array
+        */
         public function getDepartures($airport, $numberEntries) {
             // create array
             $departures = array();
-            
+
             // *** define query ***
             $sql = "
             SELECT
@@ -190,10 +190,10 @@
             WHERE `last_departures`.`origin` = '".$airport."'
             ORDER BY `last_departures`.`id` DESC
             LIMIT ".$numberEntries;
-            
+
             // *** run query ***
             $result = $this->query($sql);
-            
+
             // *** results? ***
             if($result->num_rows) {
                 // loop and save in array
@@ -223,18 +223,18 @@
             // return
             return $departures;
        }
-       
-		/**
-		* get user
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
+
+        /**
+        * get user
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
         * @param   string $user
-		* @return  object
-		*/
+        * @return  object
+        */
         public function getUser($user) {
-            
+
             // *** define query ***
             $sql = "
             SELECT 
@@ -249,10 +249,10 @@
                 LEFT JOIN `user_settings`
                     ON `users`.`id` = `user_settings`.`user_id`
             WHERE `users`.`username` = '".$user."'";
-            
+
             // *** run query ***
             $result = $this->query($sql);
-            
+
             // *** results? ***
             if($result->num_rows) {
                 // loop and save in variable
@@ -266,4 +266,4 @@
             // return
             return $user;
        }
-	}
+    }

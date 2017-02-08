@@ -1,18 +1,18 @@
 <?php
-    
-	/**
-	* site settings
-	* 
-	* @name    sites/settings.php
-	* @author  Daniel Glutz
-	* @version 29.12.2016
-	*/
+
+    /**
+    * site settings
+    * 
+    * @name    sites/settings.php
+    * @author  Daniel Glutz
+    * @version 29.12.2016
+    */
     
     
     echo "
- 	<div class='row'>
+    <div class='row'>
         <div class='col-md-4'></div>
-		<div class='col-md-4'>
+        <div class='col-md-4'>
             <div class='panel panel-default'>
                 <div class='panel-body'>
                     <form action='?site=actionsettings' method='post'>

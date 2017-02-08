@@ -16,17 +16,17 @@
     header("Location: ./?site=departures&airport=".$_SESSION['standardAirport']);
 
     
-	/**
-	* update user settings
-	* 
-	* @author  Daniel Glutz
-	* @version 28.12.2016
-	* 
-	* @param   string $standardAirport
-	* @param   number $numberEntries
-	* @param   number $refreshTime
-	* @return  void
-	*/
+    /**
+    * update user settings
+    * 
+    * @author  Daniel Glutz
+    * @version 28.12.2016
+    * 
+    * @param   string $standardAirport
+    * @param   number $numberEntries
+    * @param   number $refreshTime
+    * @return  void
+    */
     function updateSettings($standardAirport, $numberEntries, $refreshTime) {
         // *** create database object ***
         $db = new Mysql();

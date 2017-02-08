@@ -1,17 +1,17 @@
 <?php
-	
-	/**
-	* site departures
-	* 
-	* @name    sites/departures.php
-	* @author  Dario Kuster
-	* @version 06.01.2017
-	*/
-    
-    
+
+    /**
+    * site departures
+    * 
+    * @name    sites/departures.php
+    * @author  Dario Kuster
+    * @version 06.01.2017
+    */
+
+
     echo "
-	<div class='row'>
-		<div class='col-md-3'>
+    <div class='row'>
+        <div class='col-md-3'>
             <div class='panel panel-default'>
                 <div class='panel-body'>
                     <label for='flughafen'><h4>Abflug-Flughafen:</h4></label>";
@@ -39,7 +39,7 @@
 
 
                     echo "<h4>Flüge:</h4>";
-                    
+
                     // *** get departures ***
                     $departures = $db->getDepartures($_GET['airport'], $_SESSION['numberEntries']);
 
@@ -110,8 +110,8 @@
                     </a>
                 </div>
             </div>
-		</div>
-		<div class='col-md-9'>";
+        </div>
+        <div class='col-md-9'>";
 
             if(isset($departures)) {
                 if(isset($_GET['id']) AND $_GET['id'] > 0) {
@@ -122,7 +122,7 @@
                     else {
                         $city = $dDetails->getAirportCity();
                     }
-                    
+
                     // search images of city
                     $cityImages = $flickr->searchPhotos($city.',city,attractions', 5);
 
@@ -138,7 +138,7 @@
                     </div>
                     <div class='clearfix'></div>";
                 }
-                
+
                 // * output map *
                 include 'googlemaps.php';
             }
@@ -146,9 +146,9 @@
                 // * output message *
                 echo getMessage("Hinweis:", "Keine Abflüge gefunden", "Bitte betätigen sie den Knopf 'Daten aktualisieren'");
             }
-            
+
         echo "
-		</div>
-	</div>";
+        </div>
+    </div>";
 
 ?>

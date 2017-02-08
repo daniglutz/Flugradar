@@ -1,17 +1,17 @@
 <?php
-	
-	/**
-	* site user create
-	* 
-	* @name    sites/user_create.php
-	* @author  Dario Kuster
-	* @version 06.01.2017
-	*/
+
+    /**
+    * site user create
+    * 
+    * @name    sites/user_create.php
+    * @author  Dario Kuster
+    * @version 06.01.2017
+    */
     
     
     echo "
- 	<div class='row'>
-		<div class='col-md-4'></div>
+    <div class='row'>
+        <div class='col-md-4'></div>
         <div class='col-md-4'>
             <div class='panel panel-default'>
                 <div class='panel-body'>";

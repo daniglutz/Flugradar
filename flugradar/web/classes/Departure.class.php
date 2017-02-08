@@ -1,10 +1,10 @@
 <?php
     
-	/**
-	* departure class
-	* 
-	* - {@link __construct}:           constructor
-	* - {@link getId}:                 get id
+    /**
+    * departure class
+    * 
+    * - {@link __construct}:           constructor
+    * - {@link getId}:                 get id
     * - {@link getFlightIdent}:        get flightident
     * - {@link getOrigin}:             get origin
     * - {@link getDestination}:        get destination
@@ -17,13 +17,13 @@
     * - {@link getAltitude}:           get altitude
     * - {@link getLatitude}:           get latitude
     * - {@link getLongitude}:          get longitude
-	* 
-	* @name    classes/Departure.class.php
-	* @author  Dario Kuster
-	* @version 27.01.2017
-	*/
+    * 
+    * @name    classes/Departure.class.php
+    * @author  Dario Kuster
+    * @version 27.01.2017
+    */
     class Departure {
-        // Variables
+        // variables
         private $id;
         private $flightIdent;
         private $origin;
@@ -38,12 +38,12 @@
         private $latitude;
         private $longitude;
         
-		/**
-		* constructor
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
+        /**
+        * constructor
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
         * @param   integer  $id
         * @param   string   $flightIdent
         * @param   string   $origin
@@ -57,8 +57,8 @@
         * @param   integer  $altitude
         * @param   float    $latitude
         * @param   float    $longitude
-		* @return  void
-		*/
+        * @return  void
+        */
         function __construct($id, $flightIdent, $origin, $destination, $airportCity, $airportDescription, $departuretime, $arrivaltime, $aircrafttype, $speed, $altitude, $latitude, $longitude) {
             $this->id = $id;
             $this->flightIdent = $flightIdent;
@@ -75,158 +75,158 @@
             $this->longitude = $longitude;
         }
 
-		/**
-		* get id
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  integer
-		*/
+        /**
+        * get id
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  integer
+        */
         public function getId() {
             return $this->id;
         }
 
-		/**
-		* get flightident
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  string
-		*/
+        /**
+        * get flightident
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  string
+        */
         public function getFlightIdent() {
             return $this->flightIdent;
         }
 
-		/**
-		* get origin
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  string
-		*/
+        /**
+        * get origin
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  string
+        */
         public function getOrigin() {
             return $this->origin;
         }
 
-		/**
-		* get destination
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  string
-		*/
+        /**
+        * get destination
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  string
+        */
         public function getDestination() {
             return $this->destination;
         }
 
-		/**
-		* get airport city
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  string
-		*/
+        /**
+        * get airport city
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  string
+        */
         public function getAirportCity() {
             return $this->airportCity;
         }
         
-		/**
-		* get airport description
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  string
-		*/
+        /**
+        * get airport description
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  string
+        */
         public function getAirportDescription() {
             return $this->airportDescription;
         }
 
-		/**
-		* get departuretime
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  datetime
-		*/
+        /**
+        * get departuretime
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  datetime
+        */
         public function getDeparturetime() {
             return $this->departuretime;
         }
 
-		/**
-		* get arrivaltime
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  datetime
-		*/
+        /**
+        * get arrivaltime
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  datetime
+        */
         public function getArrivaltime() {
             return $this->arrivaltime;
         }
 
-		/**
-		* get aircrafttype
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  string
-		*/
+        /**
+        * get aircrafttype
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  string
+        */
         public function getAircrafttype() {
             return $this->aircrafttype;
         }
 
-		/**
-		* get speed
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  integer
-		*/
+        /**
+        * get speed
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  integer
+        */
         public function getSpeed() {
             return $this->speed;
         }
 
-		/**
-		* get altitude
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  integer
-		*/
+        /**
+        * get altitude
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  integer
+        */
         public function getAltitude() {
             return $this->altitude;
         }
 
-		/**
-		* get latitude
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  float
-		*/
+        /**
+        * get latitude
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  float
+        */
         public function getLatitude() {
             return $this->latitude;
         }
 
-		/**
-		* get longitude
-		* 
-		* @author  Dario Kuster
-		* @version 27.01.2017
-		* 
-		* @return  float
-		*/
+        /**
+        * get longitude
+        * 
+        * @author  Dario Kuster
+        * @version 27.01.2017
+        * 
+        * @return  float
+        */
         public function getLongitude() {
             return $this->longitude;
         }
