@@ -45,12 +45,12 @@
                         
                         <div class='form-group'>
                             <label for='numberEntries'><h2>Anzahl Listeneinträge:</h2></label>
-                            <input type='number' id='numberEntries' name='numberEntries' class='form-control' value='".$_SESSION['numberEntries']."' min='1'>
+                            <input type='number' id='numberEntries' name='numberEntries' class='form-control' value='".$_SESSION['numberEntries']."' min='1' max='25'>
                         </div>
                         
                         <div class='form-group'>
                             <label for='refreshTime'><h2>Aktualisierungs-Zeit:</h2></label>
-                            <input type='number' id='refreshTime' name='refreshTime' class='form-control' placeholder='".$_SESSION['refreshTime']."' step='30'>
+                            <input type='number' id='refreshTime' name='refreshTime' class='form-control' placeholder='".$_SESSION['refreshTime']."' min='0' step='30'>
                         </div>
                         <br />
 
