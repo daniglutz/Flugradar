@@ -5,11 +5,10 @@
     * 
     * @name    sites/depart_refresh.php
     * @author  Dario Kuster
-    * @version 28.11.2016
+    * @version 07.02.2017
     */
 
 
-    /*
     // FlightAware object
     $fa = new FlightAware();
     // save last departures in array
@@ -48,7 +47,6 @@
         // run query
         $db->query($sql);
     }
-    */
     
     // redirect
     header("Location: ?site=departures&airport=".$_GET['airport']);
