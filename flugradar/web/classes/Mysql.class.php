@@ -127,13 +127,13 @@
             // *** define query ***
             $sql = "
             SELECT
-                `icao_code`,
-                `description`,
-                `latitude`,
-                `longitude`
-            FROM `airports`
-            WHERE `latitude` IS NOT NULL AND `longitude` IS NOT NULL
-            ORDER BY `description`";
+                icao_code,
+                description,
+                latitude,
+                longitude
+            FROM airports
+            WHERE latitude IS NOT NULL AND longitude IS NOT NULL
+            ORDER BY description";
 
             // *** run query ***
             $result = $this->query($sql);
@@ -171,24 +171,24 @@
             // *** define query ***
             $sql = "
             SELECT
-                `last_departures`.`id`,
-                `last_departures`.`flight_ident`,
-                `last_departures`.`origin`,
-                `last_departures`.`destination`,
-                `airports`.`city` AS `airport_city`,
-                `airports`.`description` AS `airport_description`,
-                DATE_FORMAT(`last_departures`.`departuretime`, '%H:%i') AS `departuretime`,
-                DATE_FORMAT(`last_departures`.`arrivaltime`, '%H:%i') AS `arrivaltime`,
-                `last_departures`.`aircrafttype`,
-                `last_departures`.`speed`,
-                `last_departures`.`altitude`,
-                `last_departures`.`latitude`,
-                `last_departures`.`longitude`
-            FROM `last_departures`
-                LEFT JOIN `airports`
-                    ON `last_departures`.`destination` = `airports`.`icao_code`
-            WHERE `last_departures`.`origin` = '".$airport."'
-            ORDER BY `last_departures`.`id` DESC
+                last_departures.id,
+                last_departures.flight_ident,
+                last_departures.origin,
+                last_departures.destination,
+                airports.city AS airport_city,
+                airports.description AS airport_description,
+                DATE_FORMAT(last_departures.departuretime, '%H:%i') AS departuretime,
+                DATE_FORMAT(last_departures.arrivaltime, '%H:%i') AS arrivaltime,
+                last_departures.aircrafttype,
+                last_departures.speed,
+                last_departures.altitude,
+                last_departures.latitude,
+                last_departures.longitude
+            FROM last_departures
+                LEFT JOIN airports
+                    ON last_departures.destination = airports.icao_code
+            WHERE last_departures.origin = '".$airport."'
+            ORDER BY last_departures.id DESC
             LIMIT ".$numberEntries;
 
             // *** run query ***
@@ -238,17 +238,17 @@
             // *** define query ***
             $sql = "
             SELECT 
-                `users`.`id`,
-                `users`.`username`,
-                `users`.`password`,
-                `users`.`admin`,
-                `user_settings`.`standard_airport`,
-                `user_settings`.`number_entries`,
-                `user_settings`.`refresh_time`
-            FROM `users`
-                LEFT JOIN `user_settings`
-                    ON `users`.`id` = `user_settings`.`user_id`
-            WHERE `users`.`username` = '".$user."'";
+                users.id,
+                users.username,
+                users.password,
+                users.admin,
+                user_settings.standard_airport,
+                user_settings.number_entries,
+                user_settings.refresh_time
+            FROM users
+                LEFT JOIN user_settings
+                    ON users.id = user_settings.user_id
+            WHERE users.username = '".$user."'";
 
             // *** run query ***
             $result = $this->query($sql);

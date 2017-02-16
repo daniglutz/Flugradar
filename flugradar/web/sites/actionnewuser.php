@@ -70,10 +70,10 @@
         
         // INSERT SQL (user)
         $sql = "
-        INSERT INTO `users` (
-            `username`,
-            `password`,
-            `admin`
+        INSERT INTO users (
+            username,
+            password,
+            admin
         ) VALUES (
             ".getCleanedText($user).",
             ".getCleanedText($pwd).",
@@ -85,11 +85,11 @@
         
         // INSERT SQL (default settings)
         $sql = "
-        INSERT INTO `user_settings` (
-            `user_id`,
-            `standard_airport`
+        INSERT INTO user_settings (
+            user_id,
+            standard_airport
         ) VALUES (
-            (SELECT MAX(`id`) FROM `users`),
+            (SELECT MAX(id) FROM users),
             ".getCleanedText($_SESSION['standardAirport']).");";
         
         // *** run query ***

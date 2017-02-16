@@ -22,17 +22,17 @@
 
         // INSERT SQL
         $sql = "
-        INSERT INTO `last_departures` (
-            `flight_ident`,
-            `origin`,
-            `destination`,
-            `departuretime`,
-            `arrivaltime`,
-            `aircrafttype`,
-            `speed`,
-            `altitude`,
-            `latitude`,
-            `longitude`
+        INSERT INTO last_departures (
+            flight_ident,
+            origin,
+            destination,
+            departuretime,
+            arrivaltime,
+            aircrafttype,
+            speed,
+            altitude,
+            latitude,
+            longitude
         ) VALUES (
             ".getCleanedText($departinfo["ident"]).",
             ".getCleanedText($departinfo["origin"]).",
@@ -53,4 +53,3 @@
     // redirect
     header("Location: ?site=departures&airport=".$_GET['airport']);
     
-?>
