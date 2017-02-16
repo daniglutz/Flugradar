@@ -124,7 +124,7 @@
                     }
 
                     // search images of city
-                    $cityImages = $flickr->searchPhotos($city.',city,attractions', 5);
+                    $cityImages = $flickr->searchPhotos($city.',city,monument', 5);
 
 
                     // * output impressions *
