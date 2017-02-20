@@ -16,6 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Database structure for `flugradar`
+--
+
+CREATE database flugradar;
+USE flugradar;
+
+--
 -- Table structure for table `airports`
 --
 
